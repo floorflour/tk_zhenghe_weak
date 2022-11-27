@@ -1,0 +1,95 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_ENCOUNT_ROBBERY_2_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_ENCOUNT_ROBBERY_2_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_ENCOUNT_ROBBERY_2(対象)
+#DIM 対象
+
+PRINTFORML 從小巷里抄近道的時候、背後被刀頂住了
+PRINTFORML 被威脅把值錢的東西都交出來……
+PRINTL
+CALL PRINT_ABILITY(対象, GETNUM(ABL, "武闘"))
+CALL PRINT_ABILITY(対象, GETNUM(ABL, "知略"))
+
+CALL ASK_MULTI_JUDGE("給錢", 1, "抵抗", 1, "説服他", 1, "獻出身体", IS_FEMALE(対象), "逃走", 1)
+
+SELECTCASE RESULT
+	CASE 0
+		PRINTFORML 生命是最重要的
+		PRINTFORML 老實地給錢了
+		LOCAL = MIN(MONEY, 5000)
+		CALL ICPRINT(@"失去了<{LOCAL}>金", "L", カラー_注意)
+		MONEY -= LOCAL
+	CASE 1
+		PRINTFORML %ANAME(対象)%決定抵抗！
+		IF LIMIT(ABL:対象:武闘, 30, 100) >= RAND:100
+			PRINTFORML 判断無法得手後、強盜逃走了……
+			CALL PRINT_ADD_EXP(対象, "武闘経験値", RAND:10 + 5)
+		ELSE
+			PRINTFORML ……但是、反而被強盜打敗了！
+			IF IS_FEMALE(対象)
+				PRINTFORML 憤怒的強盗、打暈了%ANAME(対象)%、帯回了藏身処……
+				CALL TERRITORY_EVENT_ENCOUNT_ROBBERY_2_FUCK(対象)
+			ENDIF
+			PRINTFORML 被強盜用力毆打後、%ANAME(対象)%受傷了
+			CALL ADD_COOLTIME(対象, 3)
+		ENDIF
+	CASE 2
+		PRINTFORML %ANAME(対象)%試著説服強盜！
+		IF LIMIT(ABL:対象:知略, 30, 100) >= RAND:100
+			PRINTFORML 被%ANAME(対象)%説服的強盜、直接離開了……
+			CALL PRINT_ADD_EXP(対象, "知略経験値", RAND:10 + 5)
+		ELSE
+			PRINTFORML ……但是、起到了反效果！
+			IF IS_FEMALE(対象)
+				PRINTFORML 憤怒的強盗、打暈了%ANAME(対象)%、帯回了藏身処……
+				CALL TERRITORY_EVENT_ENCOUNT_ROBBERY_2_FUCK(対象)
+			ENDIF
+			PRINTFORML 被強盜用力毆打後、%ANAME(対象)%受傷了
+			CALL ADD_COOLTIME(対象, 3)
+		ENDIF        
+	CASE 3
+		PRINTFORML 能獻出身体希望能放過自己
+		PRINTFORML 這麼請求後、強盗用品定的眼光打量著%ANAME(対象)%
+		PRINTFORML 是看上眼了吧、他把%ANAME(対象)%帯到了藏身処……
+		CALL TERRITORY_EVENT_ENCOUNT_ROBBERY_2_FUCK(対象)
+	CASE 4
+		PRINTFORML %ANAME(対象)%決定逃走！
+		IF IS_FEMALE(対象)
+			PRINTFORML ……但是、被抓住了！
+			PRINTFORML 憤怒的強盗、打暈了%ANAME(対象)%、帯回了藏身処……
+			CALL TERRITORY_EVENT_ENCOUNT_ROBBERY_2_FUCK(対象)
+			PRINTFORML 被強盜用力毆打後、%ANAME(対象)%受傷了
+			CALL ADD_COOLTIME(対象, 3)
+		ENDIF
+ENDSELECT
+
+RETURN 1
+
+@TERRITORY_EVENT_ENCOUNT_ROBBERY_2_FUCK(対象)
+#DIM 対象
+PRINTFORML 
+PRINTFORMW 在強盗的藏身処、%ANAME(対象)%正被他調教著
+PRINTFORML 被不断揉搓著%STR_BODY("胸：感触", 対象)%、拍打著%STR_BODY("臀部", 対象)%
+PRINTFORML 被挿入了数次的%STR_BODY("陰唇：処女確認：時間経過", 対象)%、已經合不上了
+PRINTFORML 屈服于暴力和快感的%ANAME(対象)%、自己扭動腰肢向男人索求著
+PRINTFORML 為了表揚%ANAME(対象)%的主動求歡、男人在%ANAME(対象)%的膣内再一次射精了……
+PRINTFORML 
+CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ａ, Ｍ, Ｖ性交, Ａ性交, 口淫", "処女喪失, Ａ処女喪失, 接吻喪失, 膣内射精, 腸内射精, 口内射精", GET_SPERM_ID("強盗"), @"強盗的\@RAND:2 ? 肉棒 # 嘴唇\@", "強盗", "","巢穴中的調教")
+PRINTFORML 
+PRINTFORML 最後總算是逃出去了、但是身体已經完全無法忘記那快感了
+

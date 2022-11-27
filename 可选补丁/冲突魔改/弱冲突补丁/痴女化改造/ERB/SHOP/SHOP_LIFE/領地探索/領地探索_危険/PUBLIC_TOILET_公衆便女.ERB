@@ -1,0 +1,89 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_PUBLIC_TOILET_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_PUBLIC_TOILET_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_PUBLIC_TOILET(対象)
+#DIM 対象
+#DIMS 相手
+#DIMS 三人称
+
+CALL SELECT_CHARA_RANDOM("TERRITORY_EVENT_PUBLIC_TOILET")
+相手 = \@ RESULT == -1 ? 女性 # %ANAME(RESULT)% \@
+三人称 = \@ RESULT == -1 ? 她 # %PRONOUN(RESULT)% \@
+
+PRINTFORML 夜晚散步的時候去了下廁所、遇見了被鎖住的%相手%正被男人們襲撃的現場
+PRINTFORML 本以為是被凌辱了而打算出手、但是仔細一看%相手%表現的非常積極
+PRINTFORMW 好像是喜歡被隨便使用的公衆便女
+PRINTFORMW 在那淫亂場景前呆住的時候、有個男人靠近了過來
+PRINTFORML 問道你也想\@ IS_MALE(対象) ? 一起來麼？ # 當便女麼？ \@……
+PRINTFORML
+CALL ASK_MULTI_JUDGE("当肉便器", IS_FEMALE(対象), "抵抗", IS_FEMALE(対象), "加入他們", HAS_PENIS(対象), "拒絕", 1)
+
+SELECTCASE RESULT
+	CASE 0
+		LOCAL:1 = 0
+		PRINTFORML %ANAME(対象)%直直盯着那%相手%、呼吸開始急促了起来
+		PRINTFORMW 沒能戦勝想成為那樣的好奇心和欲望、輕輕點頭
+		PRINTFORMW 男人們扒光了%ANAME(対象)%的衣服、給戴上%ANAME(対象)%帯鎖鏈的項圈後与%相手%排在一起
+		$FUCK_SCENE
+		PRINTFORML 
+		PRINTFORML 公廁中響起了%ANAME(対象)%和%相手%的淫叫聲
+		PRINTFORMW %ANAME(対象)%被男人從背後粗暴地抽插著%STR_BODY("膣：処女確認：時間経過：Ｖ挿入：中出し", 対象)%、不停嬌喘
+		PRINTFORML 和旁辺的%相手%一樣被当做肉便器的%ANAME(対象)%、被許多男人包囲着做為性欲処理的工具而使用着
+		PRINTFORMW 而%ANAME(対象)%的%STR_BODY("身体", 対象)%上下流的塗鴉跟骯髒的精液、説明着她被人狠狠侵犯的事実
+		IF RESULT == 0
+			PRINTFORML %ANAME(対象)%淫乱的吐出舌頭、像一条母狗一樣沈浸在被抽插兩穴责弄性感帯所帯來的快感中
+			PRINTFORMW 不僅如此、還積極地主動用雙手和嘴巴奉仕肉棒榨取著精液
+		ELSE
+			PRINTFORML 最初還流著淚忍耐的%ANAME(対象)%、漸漸地也露出了那淫亂的発情表情
+			PRINTFORMW 身体已経完全的屈服于快感、無意識的夾緊肉棒取悅著男人
+			PRINTFORMW 用雙手和小嘴奉仕肉棒的樣子、就算是被人強迫著也非常熱情積極
+		ENDIF
+		PRINTFORML 不知是第幾次被膣内射精時、%ANAME(対象)%再度猛地後仰激烈高潮了
+		PRINTFORMW 結束射精的男人拔出肉棒的時候、大量的白濁精液伴着下流的声音從%STR_BODY("陰唇", 対象)%裡流淌出来
+		PRINTFORML 看到因為劇烈的快感而失神的%ANAME(対象)%、身旁同樣在奉仕肉棒的%相手%温柔地吻了上去
+		PRINTFORMW 男人們完全不打算讓%ANAME(対象)%休息、空出來的洞立刻就被新的肉棒挿入了、%ANAME(対象)%又発出了野獣般的喘息聲
+		IF LOCAL == 1
+			PRINTFORMW 対被雄性使用的快感上癮的%ANAME(対象)%、和%相手%一起主動放開自己的身体徹夜持續接受着男人們的精液
+		ELSE
+			PRINTFORMW 覚醒了被雄性使用的快感的%ANAME(対象)%、之後放開自己的身体和%相手%一起徹夜持續接受着男人們的精液
+		ENDIF
+		CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ａ, Ｍ, 接吻, 口淫, 輪姦, Ｖ性交, Ａ性交", "処女喪失, Ａ処女喪失, 膣内射精, 接吻喪失, 腸内射精, 口内射精", GET_SPERM_ID("地痞"), @"地痞的\@RAND:2 ? 肉棒 # 嘴唇\@", "地痞", "", "作為公衆便女時的輪姦")
+		PRINTFORML 
+		PRINTFORML 在天亮的時候、%ANAME(対象)%和%相手%終於被解放了
+		PRINTFORMW %ANAME(対象)%因為太過衝撃性的体験、搖搖晃晃的走回去、腦海中閃過了要再来這裡的想法
+	CASE 1
+		LOCAL:1 = 1
+		PRINTFORML 怎麼可能答應那種事情
+		PRINTFORMW 雖然想要拒絕、但是卻被男人提前抓住了手腕
+		PRINTFORMW 他粗暴地扒光了%ANAME(対象)%的衣服、給戴上%ANAME(対象)%帯鎖鏈的項圈後与%相手%排在一起
+		GOTO FUCK_SCENE
+	CASE 3
+		IF IS_MALE(対象)
+			PRINTFORML 対那個完全沒有興趣
+			PRINTFORML 作罷
+		ELSE
+			PRINTFORML 誰會上肉便器那種東西
+			PRINTFORML 斷然拒絕、立即逃走了
+		ENDIF
+ENDSELECT
+
+RETURN 1
+
+@SELECT_CHARA_RANDOM_LOGIC_TERRITORY_EVENT_PUBLIC_TOILET(対象)
+#DIM 対象
+RETURN SELECT_CHARA_RANDOM_LOGIC_FOR_TERRITORY_EXPLORING_BASE(対象) && IS_FEMALE(対象) && GETBIT(TALENT:対象:淫乱系, 素質_淫乱_精液便女)

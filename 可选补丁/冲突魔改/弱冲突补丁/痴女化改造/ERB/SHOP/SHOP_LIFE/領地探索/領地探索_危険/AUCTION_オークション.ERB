@@ -1,0 +1,122 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_AUCTION_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_AUCTION_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_AUCTION(対象)
+#DIM 対象
+
+PRINTFORML 深夜在歡楽街散步的時候、発現了一個令人在意的店
+PRINTFORML 明明是看上去很破的屋子、卻有衣著精良的客人接連進去
+PRINTFORML 非常可疑……
+PRINTFORML 
+CALL ASK_YN("調查", "不管")
+
+IF RESULT == 1
+	PRINTFORML 君子不立危墻之下
+	PRINTFORML 決定放任不理
+	RETURN 1
+ENDIF
+
+PRINTFORML 肯定有問題
+PRINTFORMW %ANAME(対象)%混進了客人之中打算暗查
+PRINTFORML 
+PRINTFORMW 建築物的地下、正舉辦着里拍賣会
+PRINTFORMW 拍賣的東西全都是所謂的、不合法的東西
+PRINTFORMW 不僅如此、甚至還販賣奴隸……
+
+IF IS_MALE(対象) || (HAS_PENIS(対象) && RAND:2)
+	PRINTFORML
+	CALL ASK_YN("参加", "離去")
+	IF RESULT == 1
+		PRINTFORML 不應該在這繼續呆下去了
+		PRINTFORML 早早地離開了
+		RETURN 1
+	ENDIF
+	PRINTFORMW %ANAME(対象)%決定也参加拍賣
+	LOCAL = MIN(MONEY, 3000)
+	CALL ICPRINT("支付了<LOCAL>金、獲得了奴隷少女", "L", カラー_注意)
+	PRINTFORMW 作為額外服務借到了裡面的単間
+	PRINTFORMW %ANAME(対象)%摟著微微顫抖的少女的肩膀、進入了房間
+	PRINTFORML 
+	PRINTFORMW 少女雖然還殘留著稚氣但是身體已經充滿色気了
+	PRINTFORMW 應該被好好調教過、対%ANAME(対象)%很順従、受到愛撫時的反応也很敏感
+	PRINTFORMW 把肉棒挿入濕潤的裂縫的時候、她身体後仰着発出了可愛的声音
+	PRINTFORMW 滿意的緊緊抱住她并盡情地疼愛著
+	CALL FUCK(対象, "性技, 性交, Ｃ, Ｖ挿入", "童貞喪失, 接吻喪失", 0, "奴隷的嘴唇", "", "奴隷的膣穴", "調教")
+	RETURN 1
+ENDIF
+
+PRINTFORML 
+CALL ASK_MULTI("参加", "继續潜入", "离开")
+
+SELECTCASE RESULT
+	CASE 0
+		PRINTFORMW %ANAME(対象)%決定也参加拍賣
+		LOCAL = MIN(MONEY, 3000)
+		CALL ICPRINT("支付了<LOCAL>金、獲得了奴隷青年", "L", カラー_注意)
+		PRINTFORMW 作為額外服務借到了裡面的単間
+		PRINTFORMW %ANAME(対象)%帯著體格健壯的奴隸青年進入了房間
+		PRINTFORML 
+		PRINTFORMW %ANAME(対象)%発出聲音、含弄著青年的肉棒
+		PRINTFORMW 同時用手來回搔弄著自己的%STR_BODY("膣：欲情", 対象)%
+		PRINTFORMW 漸漸無法忍耐的%ANAME(対象)%、張開了自己的雙腿、命令奴隸挿入
+		PRINTFORMW 讓他激烈的晃動著腰、直到滿足為止、一直交合了好幾次……
+		CALL FUCK(対象, "欲望, 奉仕, 性技, 性交, Ｖ, Ｍ, 口淫, Ｖ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精", GET_SPERM_ID("奴隷"), "奴隷的肉棒", "奴隷", "", "調教")
+	CASE 1
+		PRINTFORML 不能放過這種非法組織
+		PRINTFORMW 潜入的%ANAME(対象)%找到了拍賣會所有者、從背後偷襲將他擊倒…
+		PRINTFORMW 看著恐懼的男人、%ANAME(対象)%露出了可疑的笑容、說出了某個要求……
+		PRINTFORMW 
+		PRINTFORMW %ANAME(対象)%主動成爲了拍賣會的商品
+		PRINTFORML 穿著逆兔女郎裝只在乳頭和淫穴貼了創可貼的的%ANAME(対象)%、成為了競拍対象在舞台上展示著%STR_BODY("身体", 対象)%做出各種誘惑的姿勢
+		PRINTFORML 看著无数好奇的視線投向了自己、%ANAME(対象)%不禁加快了呼吸、用手揉捏著自己的胸部
+		PRINTFORMW 突然被主持人揉着臀部、%ANAME(対象)%漏出了甘甜的喘息、讓客人大声歡呼着
+		PRINTFORML %ANAME(対象)%的競拍非常熱烈
+		PRINTFORML ・
+		PRINTFORML ・
+		PRINTFORMW ・
+		SELECTCASE RAND:3
+			CASE 0
+				PRINTFORMW %ANAME(対象)%被某個富豪買下了
+				PRINTFORML 因為絶佳的商品興奮起来的他、領到%ANAME(対象)%之後想要品味全身一樣開始愛撫
+				PRINTFORML 發情了的少女用手交作爲回禮、和他一起去了別墅
+				PRINTFORMW 之後%ANAME(対象)%一直和男人狠狠地交配着、作為他的炮友生活了一段時間
+				CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ａ, Ｍ, 接吻, 口淫, 露出, 緊縛, 被虐, Ｖ性交, Ａ性交", "処女喪失, Ａ処女喪失, 膣内射精, 接吻喪失, 腸内射精, 口内射精", GET_SPERM_ID("富豪"), @"富豪的\@RAND:2 ? 肉棒 # 嘴唇\@", "富豪", "", "在拍賣中被買下後的炮友生活")
+			CASE 1
+				PRINTFORMW %ANAME(対象)%被天狗買下了
+				PRINTFORMW 聽説天狗們天生性技高超、少女的膣穴濕潤了起來
+				PRINTFORMW %ANAME(対象)%和他一起去了妖怪之山、要求天狗們成爲自己的慰安工具
+				PRINTFORMW 看著少女的%STR_BODY("身体", 対象)%、天狗們答應了
+				PRINTFORMW %ANAME(対象)%享受著天狗們的奉仕、榨取著每一根肉棒
+				PRINTFORMW 天狗村中回蕩起少女的嬌喘、%ANAME(対象)%的膣穴不停流下精液……
+				CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ａ, Ｍ, 接吻, 口淫, 露出, 緊縛, 被虐, Ｖ性交, Ａ性交", "処女喪失, Ａ処女喪失, 膣内射精, 接吻喪失, 腸内射精, 口内射精", GET_SPERM_ID("天狗"), @"天狗的\@RAND:2 ? 肉棒 # 嘴唇\@", "天狗", "", "在拍賣中被買下後的肉棒盛宴")
+			CASE 2
+				PRINTFORMW 在競拍途中、%ANAME(対象)%喊了停
+				PRINTFORMW 正在衆人的疑惑的時候、%ANAME(対象)%來到了舞台邊緣
+				PRINTFORMW 在衆人環視下、少女突然將創可貼扯下露出乳頭和小穴、自慰了起來
+				PRINTFORMW 在高潮之後、%ANAME(対象)%要求拍賣會的所有参加者都來享用她的肉體……
+				CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ａ, Ｍ, 接吻, 口淫, 自慰, 輪姦 被虐, Ｖ性交, Ａ性交", "処女喪失, Ａ処女喪失, 膣内射精, 接吻喪失, 腸内射精, 口内射精", GET_SPERM_ID("富豪"), @"富豪的\@RAND:2 ? 肉棒 # 嘴唇\@", "富豪", "", "在拍賣會上的主動亂交")
+		ENDSELECT
+		PRINTFORML 
+		PRINTFORML 享受了一段時間的%ANAME(対象)%、回到了拠点
+		PRINTFORML 子宮中裝滿了精液
+	CASE 2
+		PRINTFORML 不應該在這繼續呆下去了
+		PRINTFORML 早早地離開了
+ENDSELECT
+
+RETURN 1

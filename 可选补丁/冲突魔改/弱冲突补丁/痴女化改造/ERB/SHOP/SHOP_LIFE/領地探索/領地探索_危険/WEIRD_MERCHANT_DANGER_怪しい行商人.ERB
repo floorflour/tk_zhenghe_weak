@@ -1,0 +1,61 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_WEIRD_MERCHANT_DANGER_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_WEIRD_MERCHANT_DANGER_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_WEIRD_MERCHANT_DANGER(対象)
+#DIM 対象
+
+PRINTFORML 被行商人打了個招呼
+PRINTFORML 看来正在進行新発售的薬的試用活動
+PRINTFORML 是花了大量精力的自信作品
+PRINTL
+CALL ASK_YN("喝下", "放棄")
+
+IF RESULT == 1
+	PRINTFORML 不需要那種可疑的東西
+	PRINTFORML 拒絕了
+	RETURN 1
+ENDIF
+
+PRINTFORML 有趣
+PRINTFORML 試著喝下去了
+
+PRINTFORML ・
+PRINTFORML ・
+PRINTFORMW ・
+
+IF IS_MALE(対象)
+	PRINTFORML 肉棒突然勃起完全平息不了了！
+	PRINTFORML 説完效果因人而異後、行商人立即逃走了
+	PRINTFORML 總算是回到拠点的%ANAME(対象)%、用自慰平息了欲火……
+	CALL FUCK(対象, "自慰, Ｃ, 射精")
+ELSE
+	PRINTFORML 突然下腹部変得火熱、腦子裡被無法忍耐的快感填満了
+	PRINTFORML 行商人看着這身体顫抖呼吸慌乱的樣子露出了冷笑
+	PRINTFORMW 装作什麼都不知道的樣子問道、有什麼需要幫忙的麼？
+	PRINTFORML 因為薬物的作用而無法抵抗、全身潮紅的%ANAME(対象)%被行商人抱住了
+	PRINTFORMW 行商人摟住了%ANAME(対象)%的身体一辺用手指和舌頭愛撫舐弄、一辺帯到了附近的陰暗処
+	PRINTFORML 
+	PRINTFORML 薬物效果讓%ANAME(対象)%発情了、挺起自己的%STR_BODY("臀部", 対象)%扭動腰肢誘惑着男人
+	PRINTFORML 那個%STR_BODY("膣：処女確認", 対象)%已経変得湿漉漉的了、蠕動着期待着肉棒的插入
+	PRINTFORML 男人毫不客気的把肉棒插了進去、%ANAME(対象)%弓着背発出了愉悦的呻吟
+	PRINTFORMW %ANAME(対象)%高声嬌喘着沈醉在下腹部傳来了快感之中
+	CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ａ, 薬物依存, Ｖ性交, Ａ性交", "処女喪失, Ａ処女喪失, 膣内射精, 腸内射精", GET_SPERM_ID("行商人"), @"行商人的\@RAND:2 ? 肉棒 # 嘴唇\@", "行商人", "", "被下薬時的強姦")
+	PRINTFORML 
+	PRINTFORMW %ANAME(対象)%恢復意識的時候、以全身被白濁弄髒的樣子被丟在了陰暗処
+ENDIF
+RETURN 1

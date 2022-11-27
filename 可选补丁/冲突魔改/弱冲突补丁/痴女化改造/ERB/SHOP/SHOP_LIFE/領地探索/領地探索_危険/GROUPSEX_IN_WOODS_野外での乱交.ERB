@@ -1,0 +1,69 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_GROUPSEX_IN_WOODS_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_GROUPSEX_IN_WOODS_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_GROUPSEX_IN_WOODS(対象)
+#DIM 対象
+
+PRINTFORML 在森林散步的時候、聽到了從哪裡傳来了微弱的人声
+PRINTFORMW 悄悄地窺視樹叢深処、発現有三位的赤裸的男女在那辺交合
+PRINTFORML 一個女人跨坐在躺着的男人身上搖動着腰、那背後又有其他男人把肉棒插入了她的菊穴
+PRINTFORML 看來不是被強迫的、女人那嬌艶的表情説明了她正享受着身体被男人們插入的快感
+PRINTFORMW 目不転睛地盯着那生動的場面、%ANAME(対象)%的呼吸変粗了
+PRINTL
+CALL ASK_MULTI("参加進去", "就這樣看着", "離開這個地方")
+
+SELECTCASE RESULT
+	CASE 0
+		PRINTFORML %ANAME(対象)%無法忍耐了、出現在了他們面前
+		PRINTFORML 他們最開始嚇了一跳、但馬上露出了得意的笑容、招了招手
+		PRINTFORMW %ANAME(対象)%直接脱掉了衣服、加入了他們
+		PRINTFORML 
+		IF IS_MALE(対象)
+			PRINTFORML 她的身体太完美了、每一次挺腰插入都会有快感湧上来
+			PRINTFORMW 結果和其他男人一樣、被她身体的所有能插的地方榨取了多次精液
+			CALL FUCK(対象, "性技, 性交, Ｃ, 射精、Ｖ挿入", "童貞喪失, 接吻喪失", 0, "偶遇的女性的嘴唇", "", "偶遇的女性的膣穴", "乱交")
+		ELSE
+			PRINTFORML 寂静的森林中迴響着肉体拍打的声音和女性的嬌喘声
+			PRINTFORML %ANAME(対象)%抬起%STR_BODY("尻：性交", 対象)%和女人的雙手交叉相握、從背後被激烈的侵犯着
+			PRINTFORML 每次插入時湧上来的快感、都會讓%ANAME(対象)%從脚尖到頭頂都止不住地顫抖着
+			PRINTFORML 腰部被緊緊抓牢固定被頂着子宮口、傳来的強烈的快感讓%ANAME(対象)%的背部高高仰起
+			PRINTFORML 像是在疼愛那樣的%ANAME(対象)%一樣、女人吸吮着%ANAME(対象)%的%STR_BODY("胸：性交：感触")%并用舌頭和手指责弄着乳頭
+			PRINTFORMW 快感的洪水讓%ANAME(対象)%的頭腦一片空白、高声淫叫着到達了絶頂
+			CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ｍ, Ａ, 接吻, 口淫, 輪姦, Ｖ性交, Ａ性交", "処女喪失, Ａ処女喪失, 膣内射精, 腸内射精, 接吻喪失, 口内射精",  GET_SPERM_ID("地痞"), @"地痞的\@RAND:2 ? 肉棒 # 嘴唇\@", "地痞", "", "乱交")
+			PRINTFORML
+			PRINTFORMW 内袴当做参加費被要走的%ANAME(対象)%、在夜風中裸露着私処踏上了帰途
+		ENDIF
+	CASE 1
+		PRINTFORML 女人那淫靡的表情和動作讓%ANAME(対象)%無法把眼睛離開
+		PRINTFORML 呑了口口水、継續在一旁窺視着三人的交合
+		IF IS_MALE(対象)
+			PRINTFORMW 不久%ANAME(対象)%無法忍耐地取出了肉棒、開始当場擼動起来
+		ELSE
+			PRINTFORMW %ANAME(対象)%的手指無意識之間移向了自己的私処、開始自慰了
+		ENDIF
+		PRINTFORML 察覚到的時候已経是傍晚了
+		PRINTFORMW 男女早已離去、%ANAME(対象)%回想着之前的場景還在自慰着
+		TALENT:対象:接受快感 = 1
+		TALENT:対象:否定快感 = 0
+		CALL COLOR_PRINTL(@"%ANAME(対象)%獲得了[接受快感]", カラー_注意)
+	CASE 2
+		PRINTFORML 這不是能一直盯著看的場面
+		PRINTFORMW 決定早早離開
+ENDSELECT
+
+RETURN 1

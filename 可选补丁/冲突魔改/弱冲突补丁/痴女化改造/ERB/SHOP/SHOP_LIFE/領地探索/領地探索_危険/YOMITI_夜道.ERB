@@ -1,0 +1,117 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_YOMITI_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_YOMITI_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_YOMITI(対象)
+#DIM 対象
+#DIM 金額
+
+PRINTFORML 探索直到入夜後才結束
+PRINTFORML 走在夜路上的時候在路邊開著一個旅館
+PRINTFORML 好像沒有其他客人、店員也只有店主一人
+PRINTFORMW 店主說道離附近的村落還有很遠、而且路上一片漆黑
+PRINTFORML 怎麼辦？
+PRINTL
+CALL ASK_YN("住宿" ,"走夜路")
+IF RESULT == 1
+	PRINTFORML 可疑的旅館
+	PRINTFORMW %ANAME(対象)%無視了旅館、決定走夜路回去
+	PRINTFORML 
+	SELECTCASE RAND:3
+		CASE 0
+			PRINTFORMW 無事発生、平安到達了村落
+		CASE 1
+			PRINTFORMW 路上不小心腳滑了一下、受傷了…
+			CALL ADD_COOLTIME(対象, 2)
+		CASE 2
+			PRINTFORMW 遇到了強盗！
+			IF LIMIT(ABL:対象:武闘, 30, 80) > RAND:100
+				PRINTFORML 反撃成功
+				PRINTFORMW 逃走的強盜把錢包掉在了地上
+				MONEY += 2000
+				CALL ICPRINT("獲得了<2000>金", "W", カラー_注意)
+			ELSE
+				PRINTFORMW 雖然抵抗了、但還是被打敗了……
+				IF IS_MALE(対象)
+					PRINTFORMW 交出錢包後設法逃走了
+					金額 = 2000 + (RAND:200 + 1) * 100
+					SIF 金額 > MONEY
+						金額 = MONEY
+					MONEY -= 金額
+					CALL ICPRINT(@"被搶走了<{金額}>金…", "W", カラー_注意)
+				ELSE
+					PRINTFORMW 他看著倒在地上的%ANAME(対象)%、露出下流的笑容、把%ANAME(対象)%拖進了附近的灌木叢中
+					PRINTFORML 
+					PRINTFORML 遍體鱗傷的%ANAME(対象)%在被他圧在身下激烈的抽插著的同時不停呻吟
+					PRINTFORML 一邊被肉棒激烈地頂弄著、一邊被用手指和舌頭舔舐责弄著女性的弱点、讓%ANAME(対象)%的身体有了反応、開始顫抖
+					PRINTFORMW 為了不被中出而拼命地扭動著身體想要逃走、想要尖叫的時候被他堵住了嘴唇
+					PRINTFORML 一邊被強吻一邊被肉棒激烈抽插著、明明被強姦了的%ANAME(対象)%的身體卻開始発熱
+					PRINTFORML 毫不留情的活塞運動讓%ANAME(対象)%的身体完全屈服了、淫亂的小穴像在索求般的吸住了肉棒
+					PRINTFORMW 因快感而頭腦恍惚的%ANAME(対象)%再也無法抵抗、只能用子宮感受著他的熱度……
+					CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ｍ, Ａ, 接吻, 口淫, Ｖ性交, Ａ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精, Ａ処女喪失, 腸内射精", GET_SPERM_ID("流氓"), @"流氓的\@RAND:2 ? 肉棒 # 嘴唇\@", "流氓", "", "敗北後的強姦")
+					PRINTFORML 
+					PRINTFORMW 天亮之時、遍體鱗傷全身沾滿白濁的%ANAME(対象)%被留在了灌木叢的深処
+				ENDIF
+			ENDIF
+	ENDSELECT
+	RETURN
+ENDIF
+PRINTFORMW 因為走夜路很危險所以決定住一晚
+PRINTFORML 
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORMW 安穩的睡了一夜
+	CASE 1
+		PRINTFORML 半夜、冷醒之後直接滾到了田地中間
+		PRINTFORML 看來是被狐狸迷惑了…
+		PRINTFORMW 受涼感冒了
+		CALL ADD_COOLTIME(対象, 2)
+	CASE 2
+		PRINTFORMW 旅館内的飯吃起來也非常美味
+		IF LIMIT(ABL:対象:防衛, 30, 80) > RAND:100
+			PRINTFORMW 但是有些奇怪的味道…裡面被下了迷藥！
+			PRINTFORML 盤問店主之後、他承認自己是給旅人下藥的強盜
+			PRINTFORMW %ANAME(対象)%抓住店主之後反過來搶走了店裡的錢、之後把強盜交給了官府
+			MONEY += 2000
+			CALL ICPRINT("獲得了<2000>金", "W", カラー_注意)
+		ELSE
+			PRINTFORMW 但是有些奇怪的味道…裡面被下了迷藥！
+			IF IS_MALE(対象)
+				PRINTFORMW 察覺到的時候已經太遲了、被店主搶走錢包後直接丟了出去…
+				金額 = 2000 + (RAND:200 + 1) * 100
+				SIF 金額 > MONEY
+					金額 = MONEY
+				MONEY -= 金額
+				CALL ICPRINT(@"被搶走了<{金額}>金…", "W", カラー_注意)
+			ELSE
+				PRINTFORMW 店主看著突然倒下的%ANAME(対象)%、露出下流的笑容、把%ANAME(対象)%帯進了臥室
+				PRINTFORML 
+				PRINTFORML 被推倒在床上的%ANAME(対象)%被盡情愛撫全身之後、被毫不留情的侵犯了
+				PRINTFORML 被緊緊地抓住臀部激烈拔插著肉棒、身体不容分說地被當做雌性調教著
+				PRINTFORMW 在迷藥的作用下無法做出抵抗、%ANAME(対象)%為了不漏出呻吟只能拼命地把臉埋在枕頭之中
+				PRINTFORML 但是那個反應使他愈発興奮了、%ANAME(対象)%反而迎來了更加激烈地活塞運動
+				PRINTFORML 每次子宮口被肉棒頂到的時候傳來的快感都會讓%ANAME(対象)%腰部発軟、不由得発出嬌喘
+				PRINTFORMW 只是被内射一発、理性就完全消失了、之後很快就在和他的交合之中陷入了癡狂……
+				CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ｍ, Ａ, 接吻, 口淫, Ｖ性交, Ａ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精, Ａ処女喪失, 腸内射精", GET_SPERM_ID("強盗店主"), @"強盗店主的\@RAND:2 ? 肉棒 # 嘴唇\@", "強盗店主", "", "被下薬時的強姦")
+				PRINTFORML 
+				PRINTFORML 作為他的性奴隸被责弄了好幾天後、總算是找到機會成功逃走了
+				PRINTFORMW 但是体内已經永遠的殘留著被他的肉棒挿入的感覺了
+			ENDIF
+		ENDIF
+ENDSELECT
+
+RETURN 1

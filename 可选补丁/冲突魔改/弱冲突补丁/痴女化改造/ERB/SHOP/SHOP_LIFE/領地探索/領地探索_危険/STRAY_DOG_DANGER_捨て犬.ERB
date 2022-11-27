@@ -1,0 +1,61 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_STRAY_DOG_DANGER_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_STRAY_DOG_DANGER_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_STRAY_DOG_DANGER(対象)
+#DIM 対象
+
+
+PRINTFORML 探索時、発現了一隻髒兮兮的狗
+PRINTFORML 看起来以前是被飼養的狗、被主人遺棄了吧
+PRINTFORMW 怎麼辦？
+PRINTL
+CALL ASK_YN("带回去", "赶走")
+
+IF RESULT == 1
+	PRINTFORML 没有照顾这髒狗的空闲
+	PRINTFORMW 于是直接把狗赶走了
+	RETURN 1
+ENDIF
+
+PRINTFORMW 太可憐了、決定帯回去
+PRINTFORML ・
+PRINTFORML ・
+PRINTFORMW ・
+PRINTFORML 狗和%ANAME(対象)%很親近
+PRINTFORMW 訓練中和工作中、在%ANAME(対象)%身旁佇立的威風凜凜的身姿獲得了很高的評價
+IF IS_FEMALE(対象)
+	PRINTFORML 
+	PRINTFORML 但是兩者之間有一個秘密
+	PRINTFORML 某天偶然發現狗有著與身姿不符的粗大肉棒后、它就成爲了%ANAME(対象)%的慰安工具
+	PRINTFORML 在被%ANAME(対象)%按在地上强行口淫榨出精液后、狗就明白了自己的處境
+	PRINTFORML 之後的每個夜晚、%ANAME(対象)%都會將狗帶進自己的臥室、擺出下流的姿勢享受著狗的奉仕
+	PRINTFORMW 今天晚上同樣如此
+	PRINTFORML 
+	PRINTFORML 深夜的臥室内、%ANAME(対象)%趴在窗邊欣賞夜景、但赤裸的下半身卻有一隻狗騎在美尻上進行活塞運動
+	PRINTFORML 和人類不同的粗大異種肉棒讓%ANAME(対象)%享受的眯起雙眼
+	PRINTFORMW 又一次的膣内射精后、%ANAME(対象)%讓狗離開自己、赤裸著身體走進浴室
+	PRINTFORML 
+	PRINTFORML 已經裝滿溫水的浴缸内、%ANAME(対象)%一邊愛撫著自己的身體、一邊吮吸著身邊狗的肉棒
+	PRINTFORMW 當精液再次噴射而出、%ANAME(対象)%一滴不留的吞了下去、起身擦乾身體走出浴室
+	PRINTFORML 
+	PRINTFORML 還沒有滿足的%ANAME(対象)%、將狗按在床上跨坐上去、瘙癢的膣穴吞下狗的肉棒后%ANAME(対象)%發出愉悅的嬌喘
+	PRINTFORMW 柔軟的胸部隨著運動上下飛舞、狗的身體再次顫抖了起來
+	PRINTFORMW 伴隨著野獸的喘息、白濁的精液衝刷著已經張開的子宮、%ANAME(対象)%高声嬌喘着高潮了
+	CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｍ, 接吻, 口淫, 獣姦, Ｖ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精", GET_SPERM_ID("犬"), @"犬的\@RAND:2 ? 肉棒 # 嘴唇\@", "犬", "", "和姦")
+ENDIF
+

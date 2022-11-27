@@ -1,0 +1,82 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_NICE_SWORD_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_NICE_SWORD_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_NICE_SWORD(対象)
+#DIM 対象
+
+PRINTFORML 在古董店找到了一把宝刀
+CALL ICPRINT("雖然要<10000>金、但是能入手的話肯定会起到很大效果", "L", カラー_注意)
+PRINTFORML 想要講價但是店主一分錢都不肯降
+PRINTFORML 
+PRINTFORML 現在的金錢:{MONEY}
+CALL ASK_MULTI_JUDGE("支付10000金", MONEY >= 10000, "用手奉仕", IS_FEMALE(対象), "用嘴奉仕", IS_FEMALE(対象), "用身體支付", IS_FEMALE(対象), "放棄", 1)
+
+SELECTCASE RESULT
+	CASE 0
+		PRINTFORML 雖然是一大筆錢、但還是決定付了
+		MONEY -= 10000
+		CALL PRINT_ADD_EXP(対象, "武闘経験値", SPECIAL_TRAIN_CALC_EFFECT(対象, GETNUM(ABL, "武闘")) / 2)
+	CASE 1
+		PRINTFORML 表達用手奉仕來代替金錢後、店主嘿嘿笑著點了點頭
+		PRINTFORML 
+		PRINTFORMW 在店的深処、%ANAME(対象)%跪在店主前面、進行著奉仕
+		PRINTFORMW 店主的肉棒強力的挺起、感覺就像是在上女人一般
+		PRINTFORMW 如果被這種東西挿入的話……在捋動的時候忍不住這麼想到
+		PRINTFORMW 漸漸地在他肉棒散発的費洛蒙的影響下、%ANAME(対象)%的呼吸変粗了
+		PRINTFORMW 在他射精的時候、%ANAME(対象)%用手接住了它、咽了口口水
+		CALL FUCK(対象, "欲望, 性技, 奉仕")
+		IF ABL:対象:性技 + ABL:対象:奉仕 + ABL:対象:精愛 > RAND:15
+			PRINTFORML 
+			PRINTFORML 店主很滿意、把刀讓了出來
+			CALL PRINT_ADD_EXP(対象, "武闘経験値", SPECIAL_TRAIN_CALC_EFFECT(対象, GETNUM(ABL, "武闘")) / 2)
+		ELSE
+			PRINTFORML 
+			PRINTFORML 完全沒能讓店主滿意……
+		ENDIF
+	CASE 2
+		PRINTFORML 表達用嘴奉仕來代替金錢後、店主嘿嘿笑著點了點頭
+		PRINTFORML 
+		PRINTFORMW 在店的深処、%ANAME(対象)%跪在店主前面、含弄著他的肉棒
+		PRINTFORMW 用嘴唇含弄著強力挺起的肉棒、那雄性味道在口中不断擴散
+		PRINTFORMW 如果被這種東西挿入的話……在捋動的時候忍不住這麼想到
+		PRINTFORMW 漸漸地在他肉棒散発的費洛蒙的影響下、%ANAME(対象)%的奉仕也変得熱情了起来
+		PRINTFORMW 在他射精的時候、%ANAME(対象)%用嘴接住了它、一滴不剩地喝下去了
+		CALL FUCK(対象, "欲望, 性技, 奉仕, 口淫", "接吻喪失", 0, "店主的肉棒", "", "", "売春")
+		IF ABL:対象:性技 + ABL:対象:奉仕 + ABL:対象:精愛 > RAND:8
+			PRINTFORML 
+			PRINTFORML 店主很滿意、把刀讓了出來
+			CALL PRINT_ADD_EXP(対象, "武闘経験値", SPECIAL_TRAIN_CALC_EFFECT(対象, GETNUM(ABL, "武闘")) / 2)
+		ELSE
+			PRINTFORML 
+			PRINTFORML 完全沒能讓店主滿意……
+		ENDIF
+	CASE 3
+		PRINTFORML 表達用身體支付來代替金錢後、店主嘿嘿笑著點了點頭
+		PRINTFORML 
+		PRINTFORMW 店裡面響起了%ANAME(対象)%的嬌喘聲
+		PRINTFORMW 両穴被不停的责弄、%ANAME(対象)%已經忘記了目的完全沉溺于性交之中
+		PRINTFORMW 每次完全変成了他的形状的%STR_BODY("膣：処女確認：時間経過", 対象)%被抽插的時候、都會発出甘甜的呻吟
+		PRINTFORMW 不久後他在膣内射精的時候、%ANAME(対象)%也大聲嬌喘著高潮了
+		PRINTFORMW 用嘴清理了拔出去的肉棒後、再次開始了交合……
+		CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ｍ, 接吻, 口淫, Ｖ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精", GET_SPERM_ID("店主"), @"店主の\@RAND:2 ? 肉棒 # 唇\@", "店主", "", "売春")
+		PRINTFORML 
+		PRINTFORML 店主很滿意、把刀讓了出來
+		CALL PRINT_ADD_EXP(対象, "武闘経験値", SPECIAL_TRAIN_CALC_EFFECT(対象, GETNUM(ABL, "武闘")) / 2)
+ENDSELECT
+
+RETURN 1

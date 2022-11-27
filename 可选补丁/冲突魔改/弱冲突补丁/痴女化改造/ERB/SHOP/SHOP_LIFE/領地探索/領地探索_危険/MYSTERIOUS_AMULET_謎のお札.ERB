@@ -1,0 +1,72 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_MYSTERIOUS_AMULET_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_MYSTERIOUS_AMULET_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_MYSTERIOUS_AMULET(対象)
+#DIM 対象
+
+PRINTFORMW 看見有張符紙掉在地上
+PRINTFORML 怎麼辦？
+PRINTFORML 
+CALL ASK_YN("撿起來" ,"離開")
+IF RESULT == 1
+	PRINTFORML 沒必要特意撿起來
+	PRINTFORMW %ANAME(対象)%無視了符紙直接離開了
+	RETURN
+ENDIF
+
+PRINTFORML 是什麼符呢？
+PRINTFORMW 有些在意的%ANAME(対象)%撿了起來
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML 是替身之護符
+		PRINTFORMW %ANAME(対象)%鄭重的收進了懷中
+		ITEM:替身人偶 += 1
+		CALL COLOR_PRINTW("獲得了1個替身人偶", カラー_注意)
+	CASE 1
+		PRINTFORML 是驅魔護符
+		PRINTFORMW 感覺変得更強了
+		CALL PRINT_ADD_EXP(対象, "防衛経験値", RAND:10 + 5)
+	CASE 2
+		PRINTFORML 瞬間身体就被定住怎麼也無法動弾了
+		PRINTFORML 糟糕、看來是束縛呪符
+		PRINTFORMW %ANAME(対象)%倒向地面的時候從附近的陰暗処出現了一個可疑的人
+		IF IS_MALE(対象)
+			PRINTFORMW 無法抵抗的%ANAME(対象)%被搜身搶走了錢包
+			LOCAL = MIN(MONEY, 5000)
+			CALL ICPRINT(@"失去了<{LOCAL}>金", "L", カラー_注意)
+			MONEY -= LOCAL
+		ELSE
+			PRINTFORMW 抬起無法抵抗的%ANAME(対象)%帯到其他地方去了
+			PRINTFORML 
+			PRINTFORML 男人在%ANAME(対象)%全身貼滿了「発情」「性感百倍」等各種各樣的符紙
+			PRINTFORMW 然而這時%ANAME(対象)%卻突然掙脫束縛、踢倒了正陷入恐懼的男人
+			PRINTFORML 
+			PRINTFORML 昏暗的房間中傳來男人的悶哼和女人的嬌喘
+			PRINTFORML 已經被束縛住的男人身上被%ANAME(対象)%貼滿了「强制勃起」「精力回復」等各種各樣針對男性的符紙
+			PRINTFORML 符紙那強勁的效果讓男人屈服了、抛棄了理智沉浸在肉欲之中
+			PRINTFORML 騎乘位榨取著的%ANAME(対象)%感受到身下的男人不再有反抗的跡象、腰部搖的更加用力了
+			PRINTFORML 男人被蒙住眼睛捆住雙手在%ANAME(対象)%激烈的榨取下吐著舌頭発出喘息
+			PRINTFORML 強烈的快感波潮讓男人完全変成了笨蛋、被责弄得只能露出難看的表情嘿嘿傻笑
+			PRINTFORMW 猛地膣內射精的時候%ANAME(対象)%大幅後仰挺起了貼著「勅命孕」符紙的小腹激烈高潮了
+			CALL FUCK(対象, "欲望, 欲望, 性交, 奉仕, 性技, Ｖ, Ｂ, Ｃ, Ｖ性交", "接吻喪失, 処女喪失, 膣内射精", GET_SPERM_ID("流氓"), @"流氓的\@RAND:2 ? 肉棒 # 嘴唇\@", "流氓", "", "使用符咒逆強姦")
+			PRINTFORML 
+			PRINTFORMW 喝下了肉棒上殘餘的精液后、%ANAME(対象)%帶著滿身白濁離開了這裏
+		ENDIF
+ENDSELECT
+
+RETURN 1

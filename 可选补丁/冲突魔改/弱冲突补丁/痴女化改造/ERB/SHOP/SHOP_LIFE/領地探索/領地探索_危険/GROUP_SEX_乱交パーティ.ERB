@@ -1,0 +1,71 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_GROUP_SEX_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_GROUP_SEX_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_GROUP_SEX(対象)
+#DIM 対象
+
+PRINTFORML 在某条歓楽街散步的時候、有一個陌生的可疑男人靠了過來
+PRINTFORML 然後問道、要一起去做開心的事麼
+PRINTFORML 有些在意的%ANAME(対象)%詳細詢問了一下
+PRINTFORML 説是在前面的店鋪下面有男女聚集在一起、在做那種事情
+PRINTFORML ……也就是說、在召集亂交派対的参加者
+PRINTFORML 雖然是走在歡楽街上但是沒想到大白天都会收到這樣的邀請……
+
+PRINTL
+CALL ASK_MULTI("参加してみる", "男を捕まえる", "放棄")
+
+SELECTCASE RESULT
+	CASE 2
+		PRINTFORML 沒有興趣
+		PRINTFORML 擺脫男人直接離開了
+	CASE 1
+		PRINTFORML 不能容忍這樣的混賬事！
+		PRINTFORML 抓住了男人、交給了士兵
+		CALL ICPRINT("作為綱紀粛正的回礼、獲得了<3000>金", "L", カラー_注意)
+	CASE 0
+		PRINTFORML 很感興趣
+		PRINTFORMW 決定接受男人的邀請
+		IF IS_FEMALE(対象)
+			PRINTFORML 答應之後、男人露出了下流的笑容摟住了%ANAME(対象)%的%STR_BODY("腰", 対象)%
+			PRINTFORMW %ANAME(対象)%完全沒有抵抗就這樣被男人帯着、進入了某個店的地下
+			PRINTFORML 
+			PRINTFORML 在那裡有無数赤裸的男女正在乱交
+			PRINTFORML 和大音量播放的音楽一起、在房間中迴響着下流的体液声和喘息声
+			PRINTFORMW 空気中充満了男人和女人的気味、讓%ANAME(対象)%感覚自己的身体也変得火熱起来
+			PRINTFORML 帯她進来的男人、立馬抱住了%ANAME(対象)%的%STR_BODY("身体", 対象)%、一辺愛撫一辺脱去了彼此的衣服
+			PRINTFORML 完全性奮起来的%ANAME(対象)%、就這樣扭着身体変成了裸体
+			PRINTFORMW 整個晚上%ANAME(対象)%和他們一起享受着肉欲盛宴、被無数的肉棒奉仕着内射了好幾次
+			CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ａ, Ｍ, 接吻, 口淫, 輪姦, Ｖ性交, Ａ性交", "処女喪失, Ａ処女喪失, 膣内射精, 接吻喪失, 腸内射精, 口内射精", GET_SPERM_ID("偶遇的男人"), @"偶遇的男人的\@RAND:2 ? 肉棒 # 嘴唇\@", "偶遇的男人", "",  "乱交")
+			PRINTFORML 
+			PRINTFORMW 完全沈迷于肉欲中的%ANAME(対象)%、離開的時候被邀請着参加下一次聚会
+		ELSE
+			PRINTFORMW 答應之後、男人露出了下流的笑容把%ANAME(対象)%帯到了某個店的地下
+			PRINTFORML 
+			PRINTFORML 在那裡有無数赤裸的男女正在乱交
+			PRINTFORML 和大音量播放的音楽一起、在房間中迴響着下流的体液声和喘息声
+			PRINTFORMW 空気中充満了男人和女人的気味、讓%ANAME(対象)%感覚自己的身体也変得火熱起来
+			PRINTFORML 一位赤裸的少女抱住了%ANAME(対象)%、一辺愛撫一辺脱去了%ANAME(対象)%的衣服
+			PRINTFORML 完全性奮起来的%ANAME(対象)%粗暴的堵住了她的嘴唇、交纏着舌頭変成了裸体
+			PRINTFORMW 整個晚上%ANAME(対象)%和她們一起享受着肉欲盛宴、被反復求歡和她們做愛了好幾次
+			CALL FUCK(対象, "性技, 性交, Ｃ, 射精", "童貞喪失, 接吻喪失, Ｖ挿入", 0, "行きずりの少女の唇", "", "行きずりの少女の膣", "乱交")
+			PRINTFORML 
+			PRINTFORMW 完全満足的%ANAME(対象)%、離開的時候被邀請着参加下一次聚会
+		ENDIF
+ENDSELECT
+RETURN 1
+

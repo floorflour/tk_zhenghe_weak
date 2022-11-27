@@ -1,0 +1,72 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_MEET_WITH_MERCHANT_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_MEET_WITH_MERCHANT_DECISION(対象)
+#DIM 対象
+RETURN IS_COUNTRY(CFLAG:対象:所属)
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_MEET_WITH_MERCHANT(対象)
+#DIM 対象
+PRINTFORML 有一個商人帯着女兒来打招呼
+PRINTFORML 看来打算在這做生意、所以過来問候希望以後多多関照
+PRINTFORML 給人的印象是狡猾的胆小鬼
+PRINTFORMW 怎麼辦？
+PRINTL
+CALL ASK_MULTI_JUDGE("普通的接受問候", 1,"暗中要求賄賂", 1,"要求讓他女兒服務", HAS_PENIS(対象), "讓対方陪自己一晚", IS_FEMALE(対象))
+
+SELECTCASE RESULT
+	CASE 0
+		PRINTFORML 好像沒什麼特別的問題
+		PRINTFORMW 説着以後会去店裡看看、讓商人回去了
+	CASE 1
+		PRINTFORML 暗中要求賄賂
+		PRINTFORML 男人精明地取出了一個小包、説着不是值錢的東西递了过来
+		PRINTFORML 是個很懂的男人啊
+		PRINTFORMW 男人説着以後也請多多関照、深深地低下頭然後回去了
+		MONEY += 5000
+		CALL ICPRINT("獲得了<5000>金", "L", カラー_注意)
+	CASE 2
+		PRINTFORML %ANAME(対象)%対男人、提出了讓他女兒陪自己一晚的要求
+		PRINTFORML 男人露出了苦澀的表情、然後対女兒做了同樣的事情
+		PRINTFORML %ANAME(対象)%立即拉起女兒的手、帯入了臥室
+		PRINTFORML 
+		PRINTFORML 脱下衣服後的女兒露出了与年齡不相応的豊満的肉体
+		PRINTFORML 她的臉因為羞恥変得通紅、兩隻手拼命地遮住了私処
+		PRINTFORML 那純真的反応讓%ANAME(対象)%興奮了、直接把女兒推倒在床上
+		IF HAS_PENIS(対象)
+			PRINTFORMW %ANAME(対象)%盡情享受了那沒有他人碰過的女兒的身体、把精液沾満了那身体的裡裡外外
+			CALL FUCK(対象, "性技, 性交, Ｃ, 射精, Ｖ挿入" + (IS_FEMALE(対象) ? ", Ｂ, Ｖ, 百合" # ""), "童貞喪失, 接吻喪失", 0, "商人的女兒的嘴唇", "", "商人的女兒的膣穴", "和姦")
+		ELSE
+			PRINTFORMW 盡情享受了那沒有他人碰過的女兒的身体、充分教導了她女同的快楽
+			CALL FUCK(対象, "性技, 性交, Ｃ, Ｂ, Ｖ, 百合", "接吻喪失", 0, "商人的女兒的嘴唇", "", "", "和姦")
+		ENDIF
+		PRINTFORML 分別的時候、撫摸着女兒的屁股、小声説着今後也会好好関照你的
+		PRINTFORMW 她身体一顫小臉変紅、小聲回答道請多多関照
+	CASE 3
+		PRINTFORML %ANAME(対象)%対男人、提出了陪自己一晚的要求
+		PRINTFORML 他最開始震驚到呆住了、但是很快就因為能上%ANAME(対象)%這樣的女人而興奮了起來
+		PRINTFORML 領著親密的摟住自己腰的男人進入了臥室
+		PRINTFORML 
+		PRINTFORML %ANAME(対象)%脫去了衣服、露出了%STR_BODY("胸：愛撫", 対象)%和%STR_BODY("臀部", 対象)%
+		PRINTFORML 男人舔了舔嘴唇、猛地撲向了%ANAME(対象)%的%STR_BODY("身体", 対象)%
+		PRINTFORML 他的技術非常厲害、立刻就讓%ANAME(対象)%淪陷了
+		PRINTFORML 在那手指和腰技前不停嬌喘、高潮了好幾次……
+		CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ｍ, 接吻, 口淫, Ｖ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精", GET_SPERM_ID("商人"), @"商人的\@RAND:2 ? 肉棒 # 嘴唇\@", "商人", "", "和姦")
+		PRINTFORML
+		PRINTFORML 分別的時候、商人露出討厭的笑容、來回撫摸著%ANAME(対象)%屁股
+		PRINTFORML %ANAME(対象)%在考慮著対他的具体的援助政策的同時、也在想著要不要把叫他過來……
+ENDSELECT
+
+RETURN 1
+

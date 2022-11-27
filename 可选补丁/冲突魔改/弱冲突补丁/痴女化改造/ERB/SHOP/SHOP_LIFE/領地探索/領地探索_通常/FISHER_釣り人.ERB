@@ -1,0 +1,62 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_FISHER_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_FISHER_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_FISHER(対象)
+#DIM 対象
+PRINTFORML 沿著河邊散步的時候看到了釣魚的人
+PRINTFORML 被邀請著要不要試試釣魚
+PRINTFORML 
+CALL ASK_YN("试试看", "放弃")
+
+IF RESULT == 1
+	PRINTFORML 沒有那種時間
+	PRINTFORML 拒絕了
+	RETURN 1
+ENDIF
+
+PRINTFORML 機會難得就試試看吧
+PRINTFORML 向他借了工具、開始一邊閒聊一邊釣魚
+PRINTFORML ・
+PRINTFORML ・
+PRINTFORMW ・
+IF IS_MALE(対象)
+	PRINTFORMW 度過了愉快的時間
+	RETURN 1
+ENDIF
+
+PRINTFORMW 在釣魚的時候、氣氛変得非常好
+PRINTFORML 
+CALL ASK_YN("引诱", "放棄")
+
+IF RESULT == 1
+	PRINTFORML 那樣太沒節操了
+	PRINTFORML 作罷
+	RETURN 1
+ENDIF
+
+PRINTFORMW 做出嫵媚的動作、誘惑他
+PRINTFORMW 男人似乎非常興奮、直接把%ANAME(対象)%拉進了附近的樹叢中
+PRINTFORML 
+PRINTFORMW 男人用力的晃動著腰
+PRINTFORMW 和年輕健壯地男人做愛、讓%ANAME(対象)%受不了地発出了淫叫
+PRINTFORMW 不久之後他在膣内射出了精液、已經完全入迷的%ANAME(対象)%、用嘴继續奉仕著拔出去的肉棒……
+CALL FUCK(対象, "欲望, 精愛, 奉仕, 性技, 性交, Ｖ, Ｂ, Ｃ, Ｖ性交, 口淫, 接吻", "接吻喪失, 処女喪失, 膣内射精", GET_SPERM_ID("偶遇的男人"), "偶遇的男人的嘴唇", "偶遇的男人", "", "和姦")
+PRINTFORML 
+PRINTFORMW 和男人吻别了
+
+RETURN 1

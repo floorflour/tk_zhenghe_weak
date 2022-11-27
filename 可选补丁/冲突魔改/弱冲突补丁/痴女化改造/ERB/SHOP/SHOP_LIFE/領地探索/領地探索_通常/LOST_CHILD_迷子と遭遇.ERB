@@ -1,0 +1,88 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_LOST_CHILD_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_LOST_CHILD_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_LOST_CHILD(対象)
+#DIM 対象
+
+PRINTFORML 在领地内探索時、遇到了迷路的男孩
+PRINTFORML 和父母走散了、在周围的人群中没有找到
+
+PRINTL
+CALL ASK_MULTI("一起寻找父母", "交给士兵", "不管")
+
+IF RESULT == 2
+	PRINTFORML 不想給自己找麻煩
+	PRINTFORML 決定放任不理
+	RETURN 1
+ENDIF
+
+IF RESULT == 1
+	PRINTFORML 還是交給士兵比較好
+	PRINTFORML 把他託付給附近的士兵、返回了拠点
+	RETURN 1
+ENDIF
+
+PRINTFORML 一邊安慰著快要哭出來的孩子、一邊一起尋找他的父母
+PRINTFORML ・
+PRINTFORML ・
+PRINTFORMW ・
+
+IF RAND:2
+	PRINTFORML 順利地找到了他的雙親！
+	PRINTFORMW 和露出笑容揮著手的孩子道別後、心情愉快地返回了拠点
+	IF 対象 == MASTER && IS_COUNTRY(CFLAG:MASTER:所属)
+		CALL COLOR_PRINTL("消息在同伴间传开了、好感度上升100た", カラー_注意)
+		FOR LOCAL, 0, CHARANUM
+			SIF LOCAL == MASTER
+				CONTINUE
+			SIF CFLAG:LOCAL:所属 == CFLAG:MASTER:所属
+				CFLAG:LOCAL:好感度 += 100
+		NEXT
+	ENDIF
+	RETURN 1
+ENDIF
+
+PRINTFORML 沒能找到他的雙親……
+
+IF IS_MALE(対象)
+	PRINTFORML 已經不能再陪他找下去了、把他託付給附近的士兵後返回了拠点
+	RETURN 1
+ENDIF
+
+PRINTFORML ……本以為少年會很失望、但是他卻有些扭捏……
+PRINTL
+CALL ASK_YN("勾引", "交给士兵")
+
+IF RESULT == 1
+	PRINTFORML 已經不能再陪他找下去了、把他託付給附近的士兵後返回了拠点
+	RETURN 1
+ENDIF
+
+PRINTFORML 低聲説道「讓我帯你去個好地方」
+PRINTFORMW 拉着小孩的手进入了附近的旅馆
+PRINTFORML 
+PRINTFORML %ANAME(対象)%露出自己的身体、诱惑着第一次看到这种事感到困惑的纯洁的孩子
+PRINTFORML 小孩看着展示出来充满魅力的身体呑了口口水、不由得抱住了%ANAME(対象)%
+PRINTFORML %ANAME(対象)%兴奋的同时温柔的引领着孩子、用身体教导着性爱
+PRINTFORMW 不久之后心情舒爽的少年喘息着射精了、%ANAME(対象)%也颤抖着身体高潮了
+CALL FUCK(対象, "欲望, 奉仕, 性交, 性技, 接吻, 口淫, Ｖ, Ｖ性交", "接吻喪失, 処女喪失, 膣内射精, 口内射精", GET_SPERM_ID("小孩"), @"小孩的\@RAND:2 ? 肉棒 # 嘴唇\@", "小孩", "", "和姦")
+PRINTFORML 
+PRINTFORML 充分的疼爱了小孩之后、送回了父母身边
+PRINTFORMW 离别的时候、看见挥手道别的小孩股间膨胀了起来
+
+RETURN 1

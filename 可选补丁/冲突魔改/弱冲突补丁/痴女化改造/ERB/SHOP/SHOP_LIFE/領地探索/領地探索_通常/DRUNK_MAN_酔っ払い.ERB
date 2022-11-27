@@ -1,0 +1,83 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_DRUNK_MAN_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_DRUNK_MAN_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_DRUNK_MAN(対象)
+#DIM 対象
+
+PRINTFORMW 在熱鬧的歡楽街上逛着、突然被醉漢纏上了
+
+IF IS_MALE(対象) || (HAS_PENIS(対象) && RAND:2)
+	PRINTFORML 女人似乎喝得很醉、從衣服的空隙中能直接看見乳溝
+	PRINTFORML 靠過來說到、今晚能陪我麼？……
+	PRINTL
+CALL ASK_MULTI("陪她", "一起喝酒", "拒絕")
+	SELECTCASE RESULT
+		CASE 0
+			PRINTFORML 沒有人會放過這種機會
+			PRINTFORML 抱著步履蹣跚的她、帯進了旅館
+			PRINTFORML 
+			PRINTFORML 房間內、響起了有節奏的肉體碰撞的啪啪聲
+			PRINTFORML 在酒精的作用下她的身體非常的熱、%ANAME(対象)%的肉棒在那粘糊糊的秘所內激烈的進出著
+			PRINTFORML 不知是有了第幾次射精的預感%ANAME(対象)%插入的更深了、就這樣顫抖着腰射精了
+			PRINTFORML 雖然女人因為酒精而有些神志不清、但是依然努力的奉仕著%ANAME(対象)%
+			PRINTFORML %ANAME(対象)%之後也、疼愛了她一次又一次……
+			CALL FUCK(対象, "性技, 性交, Ｃ, 射精, Ｖ挿入" + (IS_FEMALE(対象) ? ", Ｂ, Ｖ, 百合" # ""), "童貞喪失, 接吻喪失", 0, "偶遇的女性的嘴唇", "", "偶遇的女性的膣穴", "和姦")
+		CASE 1
+			PRINTFORML 上了喝醉的人的話良心過不去
+			PRINTFORML 但是、至少可以和她愉快的喝一整晚
+			PRINTFORML 
+			PRINTFORML ……喝太多了
+			PRINTFORML 第二天早上、頭疼得厲害
+			CALL PRINT_ADD_EXP(対象, "肝臓経験値", RAND(50, 100), 1)
+			CALL ADD_COOLTIME(対象, 1)
+		CASE 2
+			PRINTFORML 沒那種心情
+			PRINTFORML 拒絕了
+	ENDSELECT
+ELSE
+	PRINTFORML 男人糾纏着%ANAME(対象)%、用鹹湿的視線盯着她看
+	PRINTFORML 然後把臉靠近、聽到了一句充滿酒臭的「5000金怎么樣？」
+	PRINTFORML 明白是什麼情況了、原来是想要買春
+	PRINTL
+CALL ASK_MULTI("点頭", "毆打", "拒绝")
+	SELECTCASE RESULT
+		CASE 0
+			PRINTFORML 好像是個不錯的男人
+			PRINTFORML %ANAME(対象)%考慮了一下眨着眼表示同意
+			PRINTFORMW 被臉上浮現出笑容的男人抱着、進入了附近的旅館
+			PRINTFORML 
+			PRINTFORML 進入房間後男人迅速粗暴地脫掉了%ANAME(対象)%的衣服
+			PRINTFORML %ANAME(対象)%也沒有抵抗、反而像是在享受愛撫般発出了呻吟、扭動著%STR_BODY("身体", 対象)%誘惑著他
+			PRINTFORML 舌頭交纏在一起被脫光之後直接被推倒在了床上、立刻就被昂然的肉棒挿入了
+			PRINTFORML %STR_BODY("膣：感度：欲情", 対象)%順滑的接受了肉棒的挿入、讓%ANAME(対象)%一陣痙攣
+			PRINTFORML 男人的腰技比想象中還要巧妙、摩擦%ANAME(対象)%腔壁的快感讓她顫抖着身体表情也変得狂乱起来
+			PRINTFORMW 完全沉醉其中的%ANAME(対象)%撒嬌般的緊緊抱著男人、整晚都在求歡
+			CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ｍ, 接吻, 口淫, Ｖ性交, 売春", "処女喪失, 膣内射精, 接吻喪失, 腸内射精, 口内射精", GET_SPERM_ID("酔漢"), @"醉漢的\@RAND:2 ? 肉棒 # 嘴唇\@", "酔漢", "", "売春")
+			PRINTFORML 
+			PRINTFORMW 第二天早上、交換聯絡方式後在告別之前和男人接吻了很長一段時間
+			MONEY += 5000
+			CALL ICPRINT("獲得了<5000>金", "L", カラー_注意)
+		CASE 1
+			PRINTFORML 無礼的傢伙！
+			PRINTFORML 盡情的殴打了男人之後、趕緊離開了
+		CASE 2
+			PRINTFORML 自己不是那種女人
+			PRINTFORML 断然拒絕直接離開
+	ENDSELECT
+ENDIF
+RETURN 1

@@ -1,0 +1,67 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_SMUGGLER_DANGER_EXISTS()
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_SMUGGLER_DANGER_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_SMUGGLER_DANGER(対象)
+#DIM 対象
+PRINTFORML 探索時、遇到了旅行的薬商
+PRINTFORML 好像有挖掘出來的薬、價格是3000金
+PRINTFORML 現在的所持金錢:{MONEY}
+PRINTL
+CALL ASK_MULTI_JUDGE("机会难得买来看看", MONEY >= 3000,"放棄", 1)
+
+IF RESULT == 1
+	PRINTFORML 不巧现在没有生病
+	PRINTFORMW %ANAME(対象)%甩開纏人的薬商返回了拠点
+	RETURN 1
+ENDIF
+
+MONEY -= 3000
+
+CALL ICPRINT("支付了<3000>金", "W", カラー_注意)
+PRINTFORMW 買下薬品的%ANAME(対象)%、立即喝了下去
+
+SELECTCASE RAND:3
+	CASE 0
+		PRINTFORML ……但是什麼也沒有発生
+		PRINTFORML 白白浪費了錢……
+	CASE 1
+		PRINTFORML 身体很快就熱起來了
+		PRINTFORMW ……感覺自己変得更加聰明了！
+		CALL PRINT_ADD_EXP(対象, "知略経験値", 10)
+		PRINTFORML 看來是買到了不錯的東西……
+	CASE 2
+		PRINTFORML 身体很快就変得潮紅了起來
+		PRINTFORMW ……看來是媚薬那種東西
+		IF IS_MALE(対象)
+			PRINTFORML %ANAME(対象)%一边压制着不由自主的勃起一边緊盯着药商
+			PRINTFORML 他立刻行動了起來、迅速逃走了
+			PRINTFORMW 強忍著性欲、%ANAME(対象)%回到了拠点……
+		ELSE
+			PRINTFORML 突然子宫开始发疼、%ANAME(対象)%不由自主想要有东西插进来
+			PRINTFORML 薬商説道、這只是薬物的副作用而已、稍微休息一下就會好的
+			PRINTFORMW 他摟住%ANAME(対象)%的腰支撐著%ANAME(対象)%、走进了附近的隐蔽处
+			PRINTFORMW
+			PRINTFORML %ANAME(対象)%的%STR_BODY("膣：欲情")%被药商狂暴的侵犯着
+			PRINTFORML 粗暴的动作让%ANAME(対象)%子宫的疼痛缓解、颤抖着身体発出淫亂的喘息
+			PRINTFORMW 阴茎刺得极深在里面射精了、讓%ANAME(対象)%发出愉悦的声音全身紧绷着高潮了
+			CALL FUCK(対象, "欲望, 奉仕, 性交, 性技, Ｖ, 薬物依存, Ｖ性交", "処女喪失, 膣内射精", GET_SPERM_ID("薬商"), @"薬商的\@RAND:2 ? 肉棒 # 嘴唇\@", "薬商", "", "強姦")
+			PRINTFORML 
+			PRINTFORMW 把高潮了好幾次還在不停痙攣的%ANAME(対象)%丟在原地、薬商迅速離開了
+		ENDIF
+ENDSELECT
+
+RETURN 1

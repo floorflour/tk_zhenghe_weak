@@ -1,0 +1,72 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_BOOKSHOP_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_BOOKSHOP_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_BOOKSHOP(対象)
+#DIM 対象
+
+PRINTFORML 発現一個舊書店後走了進去
+PRINTFORML 裡面有一位中年店主正在櫃檯内讀書
+PRINTFORMW 他瞥了這邊一眼後又把視線移回了書上
+PRINTL
+PRINTFORML 怎麼辦？
+CALL ASK_MULTI("読兵法書" ,"読料理書" ,"読魔術書")
+IF RESULT == 0
+	PRINTFORMW 閱読了兵法書
+	PRINTFORML 
+	PRINTFORMW 很有參考價值
+	CALL PRINT_ADD_EXP(対象, "知略経験値", RAND:8 + 6, 1)
+ELSEIF RESULT == 1
+	PRINTFORMW 閱読了料理書
+	PRINTFORML 
+	PRINTFORMW 記住了新的食譜
+	CALL PRINT_ADD_EXP(対象, "料理経験値", RAND:8 + 6, 1)
+ELSEIF RESULT == 2
+	PRINTFORMW 把手伸向了魔術書
+	PRINTFORML 
+	IF TALENT:対象:妖術知識 == 1
+		PRINTFORMW 学到了魔術的竅門
+		CALL PRINT_ADD_EXP(対象, "妖術経験値", RAND:8 + 6, 1)
+	ELSE
+		PRINTFORMW 但是書裡面都是亂七八糟的東西不知道到底寫了什麼
+	ENDIF
+ENDIF
+IF RAND:2 || IS_MALE(対象)
+	RETURN
+ENDIF
+PRINTFORML 
+PRINTFORML 讀著書的%ANAME(対象)%、感覺到有什麼不対勁
+PRINTFORML 她發現手中的書有問題、%ANAME(対象)%故意裝作意識不清、呆立在了原地
+PRINTFORMW 看到這個樣子的店長発出淫笑、靠近了%ANAME(対象)%……
+PRINTFORML 
+PRINTFORML %ANAME(対象)%作為書店的看板娘在那工作
+PRINTFORML 在店長的命令下、不僅是接待客人、擺貨、訂貨、就連口交和性交也是熱情的做著
+PRINTFORMW 店長以爲中了催眠術的%ANAME(対象)%、其實是主動做著這些事情
+PRINTFORML 沒有客人的時候會被店長抱到書店的陰暗処、來客人的時候就在櫃檯下面舔弄著店長的肉棒
+PRINTFORML 當然所有的精液都會一滴不漏的接住、在奉仕過後也不忘用濃厚的接吻作為回禮
+PRINTFORML 関店之後也會被他帯回家、一邊照顧他的日常生活一邊被反復多次的内射中出
+PRINTFORMW 直到某天%ANAME(対象)%感到有點無聊了、一邊騎在店長身上搖動著腰、一邊說出了真相……
+PRINTFORML 在店長驚慌的同時榨取出了精液、%ANAME(対象)%站起身舔著沾滿精液的手指説出了某個要求
+PRINTFORML 第二天開始、書店的客人們得知只要在店内購買書籍就可以得到看板娘%ANAME(対象)%的奉仕
+PRINTFORMW 看著店門口排起的長隊、%ANAME(対象)%舔了舔嘴唇
+CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ｍ, 接吻, 口淫, Ｖ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精", GET_SPERM_ID("書店的店主"), @"書店的店主的\@RAND:2 ? 肉棒 # 嘴唇\@", "書店的店主", "", "假裝被催眠后的看板娘日常")
+CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ｍ, 接吻, 口淫, Ｖ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精", GET_SPERM_ID("書店的店主"), @"書店的店主的\@RAND:2 ? 肉棒 # 嘴唇\@", "書店的店主", "", "假裝被催眠后的看板娘日常")
+PRINTFORML 
+PRINTFORML 但是這樣的生活也沒有持續太長時間、因爲部下過來找到了她
+PRINTFORMW %ANAME(対象)%雖然感到遺憾、但還是公務要緊、就榨取出身下一名男人的精液后離開了書店
+
+RETURN 1

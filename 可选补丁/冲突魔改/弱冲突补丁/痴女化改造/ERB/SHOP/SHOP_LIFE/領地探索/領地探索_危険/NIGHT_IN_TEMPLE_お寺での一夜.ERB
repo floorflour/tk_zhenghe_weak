@@ -1,0 +1,50 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_NIGHT_IN_TEMPLE_DANGER_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_NIGHT_IN_TEMPLE_DANGER_DECISION(対象)
+#DIM 対象
+RETURN IS_FEMALE(対象)
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_NIGHT_IN_TEMPLE_DANGER(対象)
+#DIM 対象
+
+PRINTFORML 探索的途中天已經黑了、決定在寺廟借住一晚
+PRINTFORMW 得到了住持的熱情款待、明明是在寺廟卻被推薦了酒肉
+PRINTFORML 怎麼辦？
+CALL ASK_YN("接受好意" ,"責難葷腥")
+IF RESULT == 1
+	PRINTFORML 責難為什麼寺廟會有葷腥之後他一臉掃興再也沒有說什麼了
+	PRINTFORMW %ANAME(対象)%住了一晚後在天亮前趕緊離開了寺廟
+	RETURN
+ENDIF
+
+PRINTFORML 無法拒絕厚意的%ANAME(対象)%喝下了递来的酒
+PRINTFORMW 看到這個的住持露出了滿足的笑容、像是在開宴會一樣不断的勧著酒
+PRINTFORML 
+PRINTFORML %ANAME(対象)%不停喝著酒卻完全沒表現出醉意、住持露出些許着急的目光
+PRINTFORML 女人其實早就看出住持的想法、又喝下了一杯酒后主動扯開自己的衣服
+PRINTFORML 抓起主持的一隻手直接按在自己的%STR_BODY("胸：愛撫", 対象)%、在男人震驚的表情中舔了舔嘴唇
+PRINTFORML 男人馬上反應過來、用雙手揉捏著女人的%STR_BODY("乳首：欲情", 対象)%、作爲回禮、%ANAME(対象)%的隔著褲子撫摸起男人已經挺立起的肉棒
+PRINTFORML 在女人的要求下住持站起來轉過身脫下褲子、%ANAME(対象)%凑上前將高貴的舌頭伸進男人的菊穴、同時用手擼動著肉棒、男人舒爽的渾身顫抖
+PRINTFORML 在住持快要射精時、%ANAME(対象)%卻用力握住肉棒强行停止射精、對男人說現在還太早
+PRINTFORML 女人將住持推倒在地跨坐上去、用%STR_BODY("陰唇：処女確認", 対象)%摩擦了一會肉棒后、%STR_BODY("膣：処女確認", 対象)%吞下了火熱的肉棒
+PRINTFORML %ANAME(対象)%發出愉悅的喘息、同時不停的扭動著腰
+PRINTFORML 在男人的努力下、肉棒突刺進了女人的子宮、%ANAME(対象)%的%STR_BODY("膣：処女確認", 対象)%一陣緊縮、榨取出的精液充滿了女人的子宮
+PRINTFORMW 住持發出粗重的喘息、然而女人還沒有滿足、再一次扭動起了腰…
+CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ａ, Ｍ, 接吻, 口淫, Ｖ性交, Ａ性交", "処女喪失, Ａ処女喪失, 膣内射精, 接吻喪失, 腸内射精, 口内射精", GET_SPERM_ID("住持"), @"住持的\@RAND:2 ? 菊穴 # 嘴唇\@", "住持", "", "寺廟中的淫戲")
+PRINTFORML 
+PRINTFORMW 翌日清晨、在昏迷的住持身上站起來的%ANAME(対象)%在他醒來前走出了寺廟
+CALL PRINT_ADD_EXP(対象, "肝臓経験値", RAND(50, 100), 1)
+
+RETURN 1

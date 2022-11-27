@@ -1,0 +1,80 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_WHORE_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_WHORE_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_WHORE(対象)
+#DIM 対象
+
+
+IF IS_MALE(対象) || (HAS_PENIS(対象) && RAND:2)
+	PRINTFORML 在歡樂街散步的時候、被妓女搭訕了
+	PRINTFORML 説道、要玩一晚麼？
+	PRINTFORML 
+	CALL ASK_YN("欣然同意", "放棄")
+
+	IF RESULT == 1
+		PRINTFORML 沒有那種心情
+		PRINTFORML 拒絕了
+		RETURN 1
+	ENDIF
+	
+	PRINTFORMW 她長得很不錯
+	PRINTFORMW %ANAME(対象)%點了點頭、于是她把%PRONOUN(対象)%帯到了附近的小屋里
+	PRINTFORML 
+	PRINTFORMW 她的肉体和技術都非常出色、%ANAME(対象)%已經射了好幾次
+	PRINTFORMW 每次挿入時她都會嬌喘道不行了、好粗、好大、扭動著妖艶的身体
+	PRINTFORMW %ANAME(対象)%像野獣般和她交合了一整晚……
+	CALL FUCK(対象, "性技, 性交, Ｃ, 射精, Ｖ挿入", "童貞喪失, 接吻喪失", 0, "娼婦的嘴唇", "", "娼婦的膣穴", "和姦")
+	LOCAL = MIN(MONEY, 3000)
+	MONEY -= LOCAL
+	CALL ICPRINT(@"支付了<{LOCAL}>金", "L", カラー_注意)
+	RETURN 1
+ENDIF
+
+
+PRINTFORML 在歡樂街散步的時候、被妓女叫住了
+PRINTFORML ……似乎是覺得自己是她的同行、想要分自己工作
+PRINTFORML 
+CALL ASK_YN("要求工作", "解開誤会")
+
+IF RESULT == 1
+	PRINTFORML 不打算當妓女
+	PRINTFORML 迅速解開了誤會
+	RETURN 1
+ENDIF
+
+PRINTFORML 她把妓女的服装借給了%ANAME(対象)%
+PRINTFORMW 能直接看見肌膚的透明薄衣、与其説是衣服不如說是內衣
+PRINTFORML %ANAME(対象)%羞紅了臉、同時心中激起了類似期待的感情
+PRINTFORML 和妓女在胡同里站了一会、很快就有男人通過了
+PRINTFORMW %ANAME(対象)%擺出強調%STR_BODY("胸：愛撫",　対象)%的姿勢誘惑著他
+PRINTFORMW 注意到那個的男人決定買下%ANAME(対象)%的一夜、一起進入了附近的小屋
+PRINTFORML 
+PRINTFORMW %ANAME(対象)%用嘴奉仕著男人
+PRINTFORMW 用嘴捋動著肉竿、同時用舌頭舐弄着浮現的血管和亀頭
+PRINTFORMW 察覚到他快到達極限後、%ANAME(対象)%躺在床上、張開雙腳邀請他插入
+PRINTFORMW 他撲向了%ANAME(対象)%、気勢洶洶的把肉棒插了進去開始激烈的晃動着腰
+PRINTFORMW %ANAME(対象)%一邊発出像娼婦一樣的妖艶的喘息、一邊説著嬌媚的淫語
+PRINTFORMW 全身潮紅的%PRONOUN(対象)%、漸漸地開始認真地扭動起腰肢
+PRINTFORMW %ANAME(対象)%完全沉醉于其中、做出了超過收取費用的奉仕……
+CALL FUCK(対象, "欲望, 奉仕, 性技, 性交, Ｖ, Ｍ, 口淫, 売春, Ｖ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精", GET_SPERM_ID("娼館的客人"), "客人的肉棒", "客", "", "売春")
+PRINTFORML 
+PRINTFORMW 結束工作的%ANAME(対象)%、身心都已経完全変成了娼婦
+MONEY += 5000
+CALL ICPRINT("獲得了<5000>金", "L", カラー_注意)
+
+RETURN 1

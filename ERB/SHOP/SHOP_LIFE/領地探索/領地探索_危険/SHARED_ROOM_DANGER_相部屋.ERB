@@ -1,0 +1,73 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_SHARED_ROOM_DANGER_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_SHARED_ROOM_DANGER_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_SHARED_ROOM_DANGER(対象)
+#DIM 対象
+
+PRINTFORMW 因為已經太晚了、所以決定住旅館
+PRINTFORMW 但是很不巧的是客人太多了、只有合租房間才有空位
+PRINTFORML 
+CALL ASK_MULTI("放棄", "与人同住")
+
+IF RESULT == 0
+	PRINTFORML 只能放棄住宿了
+	PRINTFORMW 回到拠点的時候、已經完全進入深夜了
+	RETURN 1
+ENDIF
+
+PRINTFORMW 只是住一晚的話還可以接受
+PRINTFORML ・
+PRINTFORML ・
+PRINTFORMW ・
+
+IF IS_MALE(対象) || (HAS_PENIS(対象) && RAND:2) || (CONFIG:202 == 1 && TALENT:対象:0 == 1)
+	PRINTFORMW 同一房間內的是一位美麗的女性
+	PRINTFORMW 打招呼的時候、她的眼睛里亮起了妖異的色彩
+	PRINTFORMW 
+	PRINTFORMW ……深夜、從睡眠中醒來的時候、発現自己無法動弾了
+	PRINTFORMW 全身赤裸、被捆了起來！
+	PRINTFORML 而且、同住在這個房間的女性跨坐在%ANAME(対象)%身上、扭動著腰肢
+	PRINTFORML 掙扎著想要逃走的%ANAME(対象)%、最後再她的性技下屈服了
+	PRINTFORM %ANAME(対象)%就這樣、被她
+	IF (CONFIG:202 == 1 && TALENT:対象:0 == 1)
+		PRINTFORM 折磨着高潮
+	ELSE 
+		PRINTFORM 榨精
+	ENDIF
+	
+	PRINTFORMW 了一次又一次……
+	CALL FUCK(対象, "性技, 性交, Ｃ" + (IS_FEMALE(対象) ? ", 百合, Ｂ, Ｍ" # "射精, Ｖ挿入"), "童貞喪失, 接吻喪失", 0, "偶遇的女性的嘴唇", "", "偶遇的女性的膣穴", "強姦")
+	PRINTFORML 
+	PRINTFORMW %ANAME(対象)%被解放的時候、太陽已經完全升起了
+ELSE
+	PRINTFORMW 同一房間內的是一位中年男性
+	PRINTFORMW 打招呼的時候、他的眼睛里亮起了討厭的神色
+	PRINTFORMW 在他表示難得相識而敬酒的時候、%ANAME(対象)%沒有懷疑喝了下去……
+	PRINTFORMW 
+	PRINTFORMW 在午夜的房間內、響起了肉體的拍打聲和%ANAME(対象)%的喘息聲
+	PRINTFORMW 酒被下了薬、%ANAME(対象)%直接不省人事了
+	PRINTFORMW 男人圧在被縄子綁起來的%ANAME(対象)%身上、用自己的肉棒不断的抽插著
+	PRINTFORMW 腦海完全被快感填滿的%ANAME(対象)%、即使行動受到了限制也自己扭動起腰肢
+	PRINTFORMW 每一次抽插的時候、愛液都會從%STR_BODY("膣：処女確認：時間経過：Ｖ挿入：中出し", 対象)%里噴出
+	PRINTFORMW 不久後男人在%ANAME(対象)%的最深処射精的時候、%PRONOUN(対象)%也高潮了、用子宮容納了他所有的種子
+	CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ｍ, 接吻, 口淫, Ｖ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精", GET_SPERM_ID("偶遇的男人"), @"偶遇的男人的\@RAND:2 ? 肉棒 # 嘴唇\@", "偶遇的男人", "", "強姦")
+	PRINTFORML 
+	PRINTFORMW ……好像睡過頭了、醒來的時候男人已經不在了
+	PRINTFORMW 明明睡了個好覺卻依然感覺很疲勞、到達発生了什麼呢……
+ENDIF
+RETURN 1

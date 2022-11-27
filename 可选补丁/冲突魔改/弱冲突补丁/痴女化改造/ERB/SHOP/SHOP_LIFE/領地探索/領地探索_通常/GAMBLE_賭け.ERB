@@ -1,0 +1,80 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_GAMBLE_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_GAMBLE_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_GAMBLE(対象)
+#DIM 対象
+
+PRINTFORML 在酒場喝酒的時候、被一位其他客人邀請用撲克賭一場
+IF IS_MALE(対象)
+	PRINTFORML 贏了的話就能享用她的身体、輸了的話要給她5000金
+ELSE
+	PRINTFORML 贏了的話能獲得10000金、輸了的話就要肉償
+ENDIF
+PRINTL
+CALL PRINT_ABILITY(対象, GETNUM(ABL, "知略"))
+
+CALL ASK_MULTI_JUDGE("參加", IS_FEMALE(対象) || (IS_MALE(対象) && MONEY >= 5000), "拒絕", 1)
+
+IF RESULT == 1
+	PRINTFORML 沒有興趣
+	PRINTFORML 繼續獨酌
+	RETURN 1
+ENDIF
+
+PRINTFORML 開賭！
+PRINTFORML ・
+PRINTFORML ・
+PRINTFORMW ・
+
+IF LIMIT(ABL:対象:知略, 50, 90) > RAND:100
+	PRINTFORML 勝利了！
+	IF IS_MALE(対象)
+		PRINTFORML 是認為自己絕対不會輸麼、一臉震驚的女人聳拉著肩膀、垂頭喪氣
+		PRINTFORMW 被逼迫履行賭約的女人不情願地點了點頭
+		PRINTFORMW %ANAME(対象)%摟住女人的腰、把她帯到了附近的旅館
+		PRINTFORML 
+		PRINTFORML 立即剝掉衣服之後、她用手遮著自己的胸部和秘所
+		PRINTFORML 和之前的態度完全相反、好像還很純潔的樣子、低垂著通紅的臉
+		PRINTFORML 被勾起了興趣的%ANAME(対象)%撲向了有些膽怯的她、一整晚都在認真的開発那個肉体敏感的部位
+		PRINTFORML 效果非常顯著、剛才還和黃花閨女一樣羞恥的她、如今已經覺醒了作為雌性的喜悅、嬌軀亂顫不停高聲地呻吟著
+		PRINTFORMW %ANAME(対象)%和她就這樣、直到彼此的体力耗盡進入睡眠之前一直貪婪地発泄著性欲
+		CALL FUCK(対象, "性技, 性交, Ｃ, 射精, Ｖ挿入", "童貞喪失, 接吻喪失", 0, "酒場的女客的嘴唇", "", "酒場的女客的膣穴", "和姦")
+	ELSE
+		PRINTFORML 按照約定得到了賭金
+		CALL ICPRINT(@"獲得了<10000>金", "L", カラー_注意)
+		MONEY += 10000
+	ENDIF
+ELSE
+	PRINTFORML 輸了……
+	IF IS_FEMALE(対象)
+		PRINTFORML 男用手摟住了%ANAME(対象)%的腰、説要陪他一整晚
+		PRINTFORMW 約定就是約定。%ANAME(対象)%只能默默從了他
+		PRINTFORML 
+		PRINTFORML 男人用他精湛的手法、很快就讓%ANAME(対象)%露出了飄飄然的表情
+		PRINTFORML 被粗壮的肉棒魅惑了的%ANAME(対象)%、毫不猶豫地掰開了自己的%STR_BODY("膣", 対象)%請求著挿入
+		PRINTFORMW 那粗暴又不失技巧的腰技讓%ANAME(対象)%什麼也不在乎了、即使是膣内射精也毫不抵抗地接受了
+		CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ｍ, 接吻, 口淫, Ｖ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精", GET_SPERM_ID("流氓"), @"流氓的\@RAND:2 ? 肉棒 # 嘴唇\@", "流氓", "", "和姦")
+		PRINTFORML 
+		PRINTFORMW 天色発白的時候終於被解放了的%ANAME(対象)%、按着下腹部帯着蹣跚的步伐踏上了帰途
+	ELSE
+		PRINTFORML 按照約定支付了賭金
+		CALL ICPRINT("失去了<5000>金", "L", カラー_注意)
+		MONEY -= 5000
+	ENDIF
+ENDIF
+

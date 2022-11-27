@@ -1,0 +1,75 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_PITFALL_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_PITFALL_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_PITFALL(対象)
+#DIM 対象
+
+PRINTFORMW %ANAME(対象)%探索的時候、腳下突然一空！
+PRINTFORMW 好像是掉進了落穴陷阱里
+PRINTFORML 連腰部都陷下去了、怎麼也拔不出來
+
+IF IS_MALE(対象)
+	PRINTFORML 向路過的人求助之後、他要求了3000金的報酬
+	PRINTFORML 
+	PRINTFORML 現在的金錢:{MONEY}
+	CALL ASK_MULTI_JUDGE("支付", MONEY >= 3000, "靠自己的力量出来", 1)
+	IF RESULT == 0
+		PRINTFORML 不情願地答應了下來後、才被他救了出來
+		CALL ICPRINT("支付了<3000>金", "L", カラー_注意)
+		MONEY -= 3000
+	ELSE
+		PRINTFORML 決定靠自己的力量逃脫
+		PRINTFORMW ……結果最後到了夜晚才做到
+		CALL ADD_COOLTIME(対象, 1)
+	ENDIF
+	RETURN 1
+ENDIF
+
+PRINTFORML 向路過的人求助之後、他嘿嘿一笑
+PRINTFORML 說道、我可不會白白幫忙啊？
+PRINTFORML 
+CALL ASK_MULTI_JUDGE("付錢", MONEY >= 3000, "用手奉仕", 1, "用嘴奉仕", 1, "自己逃脫", 1)
+
+SELECTCASE RESULT
+	CASE 0
+		PRINTFORML 不情願地答應了下來後、才被他救了出來
+		CALL ICPRINT("支付了<3000>金", "L", カラー_注意)
+		MONEY -= 3000
+	CASE 1
+		PRINTFORML 表示會用手奉仕他之後、他立刻掏出了肉棒
+		PRINTFORMW 那个东西看上去跟%ANAME(対象)%的脸一样大
+		PRINTFORMW 在捋動的時候、從手掌和指尖傳來的熱度讓%ANAME(対象)%也興奮了起來
+		PRINTFORMW 欲情難耐的%ANAME(対象)%、一邊注意著不被他発現、一邊開始责弄起落穴內的自己的下半身
+		PRINTFORMW 在自慰的時候、之前還勉勉強強的奉仕也変得熱情了起來
+		PRINTFORMW 男人射精的時候、%ANAME(対象)%主動地用臉接住了白濁……
+		CALL FUCK(対象, "欲望, Ｃ, 奉仕, 精愛, 性技, 自慰")
+	CASE 2
+		PRINTFORML 表示會用嘴奉仕他之後、他立刻掏出了肉棒
+		PRINTFORMW 那个东西看上去跟%ANAME(対象)%的脸一样大
+		PRINTFORMW 小心翼翼地含弄的時候、在舌頭和口腔內擴散的熱度和雄性的臭味讓%ANAME(対象)%也興奮了起來
+		PRINTFORMW 欲情難耐的%ANAME(対象)%、一邊注意著不被他発現、一邊開始责弄起落穴內的自己的下半身
+		PRINTFORMW 在自慰的時候、之前還顯得有些厭悪的口交也変得熱情了起來
+		PRINTFORMW 男人射精的時候、%ANAME(対象)%一言不発的把白濁全呑了下去……
+		CALL FUCK(対象, "欲望, Ｃ, 奉仕, 精愛, 性技, 口淫", "接吻喪失", 0, "偶遇的男人の肉棒")
+	CASE 3
+		PRINTFORML 決定靠自己的力量逃脫
+		PRINTFORMW ……結果最後到了夜晚才做到
+		CALL ADD_COOLTIME(対象, 1)
+ENDSELECT
+
+RETURN 1

@@ -1,0 +1,107 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_SOUP_RUN_DANGER_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_SOUP_RUN_DANGER_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_SOUP_RUN_DANGER(対象)
+#DIM 対象
+
+PRINTFORML 在貧民窟、遇到了賑濟現場
+PRINTFORML 
+CALL PRINT_ABILITY(対象, GETNUM(ABL, "料理"))
+CALL ASK_YN("帮忙", "放弃")
+
+IF RESULT == 1
+	PRINTFORMW 対奉仕活動沒有興趣
+	PRINTFORML 不管它
+	RETURN 1
+ENDIF
+
+IF LIMIT(ABL:対象:料理, 50, 80) >= RAND:100
+	PRINTFORMW 熟練地幫忙了
+	PRINTFORML 被排隊的流浪漢們道謝了
+	CALL PRINT_ADD_EXP(対象, "料理経験値", RAND:10 + 5)
+ELSE
+	PRINTFORMW 最終也只是幫了點小忙
+	PRINTFORML 被排隊的流浪漢們道謝了
+	CALL PRINT_ADD_EXP(対象, "料理経験値", RAND:5 + 1)
+ENDIF    
+
+SIF IS_MALE(対象)
+	RETURN 1
+
+PRINTFORMW 正在收拾的時候、被一位流浪漢搭話了
+PRINTFORML 因為缺女人而煩惱、所以問道能不能提供其他「幫助」
+PRINTFORML 好像被請求做那種事……
+
+CALL ASK_MULTI("用手来做", "用口来做", "上了対方", "爆対方菊花", "拒绝")
+
+SELECTCASE RESULT
+	CASE 0
+		PRINTFORML 説道能用手幫他、流浪漢把%ANAME(対象)%帯回了自己的住所
+		PRINTFORMW 他立刻、掏出了已經勃起的肉棒
+		PRINTFORML 沒有清洗過的肉棒上沾滿了恥垢
+		PRINTFORMW 臭味不断地湧入鼻子中、在用手捋動的時候、漸漸自己也入迷了
+		PRINTFORMW 不知不覺中%ANAME(対象)%無法圧抑住自己的性奮、開始自慰起來
+		PRINTFORMW 男人低聲呻吟著射精的時候、%ANAME(対象)%主動用臉接住了白濁……
+		CALL FUCK(対象, "奉仕, 性技, 精愛, Ｃ, Ｂ, 自慰")
+	CASE 1
+		PRINTFORML 説道能用嘴幫他、流浪漢把%ANAME(対象)%帯回了自己的住所
+		PRINTFORMW 他立刻、掏出了已經勃起的肉棒
+		PRINTFORML 沒有清洗過的肉棒上沾滿了恥垢
+		PRINTFORMW 臭味不断地湧入鼻子中、在舔弄清潔的過程中、漸漸自己也入迷了
+		PRINTFORMW 不知不覺中%ANAME(対象)%無法圧抑住自己的性奮、開始自慰起來
+		PRINTFORMW 男人低聲呻吟著射精的時候、%ANAME(対象)%主動把白濁全部喝下去了……
+		CALL FUCK(対象, "奉仕, 性技, 精愛, Ｃ, Ｂ, Ｍ, 自慰, 口淫", "接吻喪失, 口内射精", 0, "流浪漢的肉棒", "", "", "巢穴中的売春")
+	CASE 2
+		IF RAND:2
+			PRINTFORML %ANAME(対象)%點頭同意的時候、流浪漢高興地跳了起來
+			PRINTFORMW 摟住%ANAME(対象)%的腰不停撫摸著屁股、帯回了自己的住所
+			PRINTFORML 
+			PRINTFORMW 現在在快要崩潰的住所中、傳出了%ANAME(対象)%野獣般的嬌喘聲
+			PRINTFORMW %ANAME(対象)%和男人用狗的姿勢交合著
+			PRINTFORMW 每次頂入的時候、都會從%STR_BODY("膣：感度", 対象)%濺出射進去好幾発的精液和愛液的混合汁液
+			PRINTFORMW 粗暴地揉搓著%STR_BODY("胸：性交：後背位", 対象)%、拍打著%STR_BODY("尻：感触", 対象)%、給予%ANAME(対象)%難耐的快感
+			PRINTFORMW 男人在膣内射精的時候、%ANAME(対象)%也大聲淫叫著高潮了……
+			CALL FUCK(対象, "欲望, 精愛, 性技, 性交, Ｖ, Ｂ, Ｃ, Ｖ性交", "処女喪失, 膣内射精", GET_SPERM_ID("流浪漢"), "", "流浪漢", "", "巢穴中的売春")
+		ELSE
+			PRINTFORML %ANAME(対象)%點頭同意的時候、流浪漢露出了下流的笑容
+			PRINTFORMW 摟住%ANAME(対象)%的腰不停撫摸著屁股、帯回了自己的住所
+			PRINTFORML 
+			PRINTFORMW 被綁起來的%ANAME(対象)%、被同時侵犯著兩穴和小嘴
+			PRINTFORMW 在住所前有一群流浪漢正在等待著、%ANAME(対象)%要陪他們所有人做愛
+			PRINTFORMW 赤裸裸的発泄著性欲的粗暴性愛、讓%ANAME(対象)%已經高潮了好幾次
+			PRINTFORMW 儘管如此他們還是不滿足、強迫%ANAME(対象)%使用%STR_BODY("胸：性交：騎乗位", 対象)%和%STR_BODY("臀部", 対象)%奉仕他們
+			PRINTFORMW %ANAME(対象)%被解放的時候、已經是所有洞里都被射了幾十発精液之後的事了……
+			CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, 緊縛, 苦痛快楽, Ｃ, Ｖ, Ｂ, Ｍ, Ａ, 接吻, 口淫, Ｖ性交, Ａ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精, Ａ処女喪失, 腸内射精", GET_SPERM_ID("流浪漢"), "流浪漢的肉棒", "流浪漢", "", "巢穴中的輪姦")
+		ENDIF
+	CASE 3
+		PRINTFORML 説道前面不行、但是可以用後面做的時候、流浪漢高興地跳了起來
+		PRINTFORMW 摟住%ANAME(対象)%的腰不停撫摸著屁股、帯回了自己的住所
+		PRINTFORML 
+		PRINTFORMW 現在在快要崩潰的住所中、傳出了%ANAME(対象)%野獣般的嬌喘聲
+		PRINTFORMW %ANAME(対象)%和男人用狗的姿勢肛交著
+		PRINTFORMW 男人緊抓著撅起的%STR_BODY("アナル：感度", 対象)%、晃動著腰
+		PRINTFORMW 肉棒每次頂入肛門的時候、都會從中濺出射進去好幾発的精液和腸液的混合汁液
+		PRINTFORMW 被同時用手指扣弄著%STR_BODY("膣", 対象)%、讓%ANAME(対象)%翻起白眼只能不停的淫叫
+		PRINTFORMW 男人在腸内射精的時候、%ANAME(対象)%也大聲淫叫著高潮了……
+		CALL FUCK(対象, "欲望, 精愛, 性技, 性交, Ｂ, Ｃ, Ｖ, Ａ, Ａ性交", "Ａ処女喪失, 腸内射精", GET_SPERM_ID("流浪漢"), "", "流浪漢", "", "巢穴中的売春")
+	CASE 4
+		PRINTFORML 怎麼可能会答應
+		PRINTFORML 斷然拒絕了
+		RETURN 1
+ENDSELECT
+RETURN 1

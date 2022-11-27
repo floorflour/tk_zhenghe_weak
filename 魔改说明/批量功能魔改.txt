@@ -1,0 +1,5 @@
+批量功能魔改
+在左侧栏-指挥中心中
+加入了建筑批量功能和外交批量功能
+
+地址：abyss.sbs/forum.php?mod=viewthread&tid=62727

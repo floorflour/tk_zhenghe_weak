@@ -1,0 +1,52 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_SWIMMING_DANGER_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_SWIMMING_DANGER_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_SWIMMING_DANGER(対象)
+#DIM 対象
+PRINTFORML 探索時、在森林的深処找到了能沐浴的干浄的水潭
+PRINTFORMW 怎麼辦？
+PRINTL
+CALL ASK_MULTI("洗个澡", "喝水")
+
+IF RESULT == 1
+	PRINTFORML 水冰冰涼、喝下之後感覚湧出了力量
+	PRINTFORMW 充分的滋潤了喉嚨的%ANAME(対象)%返回了拠点
+	RETURN 1
+ENDIF
+PRINTFORML 難得的機会於是打算洗個澡
+PRINTFORML ・
+PRINTFORML ・
+PRINTFORMW ・
+
+IF IS_MALE(対象)
+	PRINTFORML 非常舒服
+	PRINTFORMW 渾身清爽的%ANAME(対象)%返回了拠点
+	CALL PRINT_ADD_EXP(対象, "武闘経験値", 1)
+ELSE
+	PRINTFORML ……從附近的樹叢中飛出了癡漢、襲撃了過來！
+	PRINTFORMW 癡漢以爲在裸体的状态什么都办不到的%ANAME(対象)%卻很快就打倒了他
+	PRINTFORMW 被%ANAME(対象)%拖進了水潭
+	PRINTFORML 
+	PRINTFORML 癡漢被兴奋的%ANAME(対象)%压在岸邊上、肉棒被冰涼的水刺激的挺立了起來
+	PRINTFORML 徒劳的抵抗没有阻止対方將挺立的肉棒硬塞進濕潤的膣穴、身体猛地一顫
+	PRINTFORML 兴奋不已的%ANAME(対象)%开始猛烈的晃动起腰、癡漢发出了屈辱的喘息
+	PRINTFORMW 不久后他违心的射了出来、%ANAME(対象)%的身体高潮了
+	CALL FUCK(対象, "欲望, 性交, 性技, Ｖ, Ｖ性交", "膣内射精, 処女喪失", GET_SPERM_ID("痴漢"), @"痴漢の\@RAND:2 ? 肉棒 # 唇\@", "痴漢", "", "水潭中的逆強姦")
+	PRINTFORML 
+	PRINTFORMW 私処還不停流出著白濁液的%ANAME(対象)%將癡漢丟在原地直接走了
+ENDIF

@@ -1,0 +1,68 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_GET_INJURED_DANGER_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_GET_INJURED_DANGER_DECISION(対象)
+#DIM 対象
+RETURN IS_FEMALE(対象)
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_GET_INJURED_DANGER(対象)
+#DIM 対象
+PRINTFORML 痛痛痛！
+PRINTFORML %ANAME(対象)%在散步的时候受伤了
+PRINTL
+CALL ASK_MULTI("忍耐撐着", "看医生", "自我治疗")
+
+IF RESULT == 0
+	PRINTFORML 這種程度只要忍著就行……
+	PRINTFORMW 
+	$MYSELF
+	IF RAND:3
+		PRINTFORML ……情況悪化了
+		CALL ADD_COOLTIME(対象, 3)
+	ELSE
+		PRINTFORML ……痊愈了！
+		MAXBASE:対象:体力 += 100
+		CALL ICPRINT(@"体力最大値提高了<100>、変成了<{MAXBASE:対象:体力}>", "L", カラー_注意)
+	ENDIF
+ELSEIF RESULT == 2
+	PRINTFORMW 這樣的傷口応該可以自己治疗吧
+	GOTO MYSELF
+ELSE
+	PRINTFORML 前往附近的一間小診所包紮傷口
+	PRINTFORML 裡頭出来了一個駝着背、帯着下流笑容的医生
+	PRINTFORMW 看起来不像是一個高明的医生、但是不能隨便從外表来判断一個人
+	PRINTFORML ・
+	PRINTFORML ・
+	PRINTFORMW ・
+	PRINTFORML %ANAME(対象)%打了麻醉針後在手術台上閉上了眼睛
+	PRINTFORML 医生舔着嘴唇的看着台上的%ANAME(対象)%後、開始下流的用舌頭和手指上下親舔撫弄着%ANAME(対象)%的%STR_BODY("身体", 対象)%
+	PRINTFORML 被愛撫而産生些微反応的%ANAME(対象)%漏出一絲妖媚的吐息讓医生迫不及待的掏出肉棒来
+	PRINTFORMW 這時%ANAME(対象)%卻睜開了雙眼、原來她并沒有睡着
+	PRINTFORML 
+	PRINTFORML 医生握著肉棒僵在原地、突然聽到%ANAME(対象)%說讓他繼續
+	PRINTFORML %ANAME(対象)%主動分開双腿、医生把肉棒対準%STR_BODY("膣：処女確認：欲情", 対象)%后又看向少女、得到了同樣的回應
+	PRINTFORML 不再顧慮的他一口気將肉棒連根挿入到最深処、%ANAME(対象)%發出了愉悅的嬌喘
+	PRINTFORML 他一辺緊緊抓着不停碰撞弾跳的%ANAME(対象)%、一辺激烈的抽動着腰竭尽全力的侵犯着她
+	PRINTFORML 膣壁摩擦著肉棒、露出享受表情的%ANAME(対象)%命令醫生用力吸吮著自己的胸部
+	CALL FUCK(対象, "欲望, 奉仕, 精愛, 性技, 性交, Ｃ, Ｖ, Ｂ, Ａ, Ｍ, 接吻, 口淫, Ｖ性交, Ａ性交", "処女喪失, Ａ処女喪失, 膣内射精, 接吻喪失, 腸内射精, 口内射精", GET_SPERM_ID("医者"), @"医生的\@RAND:2 ? 肉棒 # 嘴唇\@", "医者", "", "命令惡德醫生奉仕")
+	PRINTFORML 
+	PRINTFORML 与外表不同擁有確実的技術和粗大的肉棒
+	PRINTFORML %ANAME(対象)%撫摸著医生的肉棒約定后下次還會來
+	PRINTFORMW 走出診所后、已経流到大腿的精液讓%ANAME(対象)%露出了笑容
+	LOCAL = MIN(MONEY, 2000)
+	MONEY -= LOCAL
+	CALL ICPRINT(@"支付了<{LOCAL}>金", "L", カラー_注意)
+ENDIF
+
+RETURN 1

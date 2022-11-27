@@ -1,0 +1,50 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_PARTTIME_TEACHER_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_PARTTIME_TEACHER_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_PARTTIME_TEACHER(対象)
+#DIM 対象
+
+PRINTFORML 看到了私塾
+PRINTFORMW 聽説是孩子們太過精神而有些困擾
+PRINTL
+CALL PRINT_ABILITY(対象, GETNUM(ABL, "政治"))
+CALL ASK_YN("幇忙" ,"離開這裡")
+
+IF RESULT == 1
+	PRINTFORML 沒心情去陪小孩
+	PRINTFORMW 鄭重拒絕了
+	RETURN 1
+ENDIF
+
+PRINTFORML 決定做臨時教師
+PRINTFORMW 讓充滿活力的孩子們坐下后站在了講壇上
+PRINTFORML ・
+PRINTFORML ・
+PRINTFORMW ・
+
+IF LIMIT(ABL:対象:政治 * 3 / 2, 30, 100) > RAND:100
+	PRINTFORML %ANAME(対象)%的課很受孩子們的歡迎
+	PRINTFORMW 因為愉快的授課獲得了答謝、之後離開了私塾
+	CALL PRINT_ADD_EXP(対象, "政治経験値", RAND:8 + 2)
+ELSE
+	PRINTFORML ……孩子們聽不懂%ANAME(対象)%在說什麼
+	PRINTFORMW 深切地體會到這比戦闘還要困難後、離開了私塾
+ENDIF
+
+
+RETURN 1

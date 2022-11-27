@@ -1,0 +1,54 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_FLOWER_VENDOR_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_FLOWER_VENDOR_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_FLOWER_VENDOR(対象)
+#DIM 対象
+PRINTFORML 被少女搭話了
+PRINTFORML 聽她説道、這位客人要花10金買一朵花麼？
+PRINTL
+CALL ASK_MULTI_JUDGE("買", MONEY >= 10, "連她一起買下", MONEY >= 1000, "不需要", 1)
+
+SELECTCASE RESULT
+	CASE 0
+		PRINTFORML 因為難得就答應她吧
+		PRINTFORML 買了一朵花
+		CALL ICPRINT("支付了金<10>", "L", カラー_注意)
+		MONEY -= 10
+		PRINTFORML 少女答謝之後離開了
+	CASE 1
+		PRINTFORML 我要連你也一起買下
+		PRINTFORML 這麼說完後少女雖然面紅耳赤、但是卻沒有拒絕
+		PRINTFORML 少女拉著%ANAME(対象)%的手、帯到了自己的家裡
+		PRINTFORML 
+		PRINTFORML 少女似乎已經習慣了這種事情
+		PRINTFORML 雖然還有幼小但是能進行出色的奉仕、刺激著%ANAME(対象)%的情欲
+		PRINTFORML %ANAME(対象)%花了大量時間、享受著那嬌嫩的肢体
+		IF HAS_PENIS(対象)
+			CALL FUCK(対象, "性技, 性交, Ｃ, 射精, Ｖ挿入" + (IS_FEMALE(対象) ? ", Ｂ, Ｖ, 百合" # "") , "童貞喪失, 接吻喪失", 0, "売花的少女的嘴唇", "", "売花的少女的膣穴", "和姦")
+		ELSE
+			CALL FUCK(対象, "性技, 性交, Ｃ, Ｂ, Ｖ, 百合", "接吻喪失", 0, "売花的少女的嘴唇", "", "", "和姦")
+		ENDIF
+		PRINTFORML
+		PRINTFORML 臨別之際、少女親吻了%ANAME(対象)%
+		CALL ICPRINT("支付了<1000>金", "L", カラー_注意)
+		MONEY -= 1000
+	CASE 2
+		PRINTFORML 不需要那個
+		PRINTFORML 拒絕了
+ENDSELECT
+RETURN 1

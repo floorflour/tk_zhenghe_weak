@@ -1,0 +1,110 @@
+﻿;-------------------
+;存在判定
+;なにもさせないこと
+;-------------------
+@TERRITORY_EVENT_DROP_WEAPON_EXISTS()
+#DIM 対象
+RETURN 1
+
+;-------------------
+;発生判定
+;-------------------
+@TERRITORY_EVENT_DROP_WEAPON_DECISION(対象)
+#DIM 対象
+RETURN 1
+
+;-------------------
+;本体
+;-------------------
+@TERRITORY_EVENT_DROP_WEAPON(対象)
+#DIM 対象
+PRINTFORML 走在險峻的山路時、不小心武器掉下了懸崖
+PRINTFORML 慌忙的跑到崖下、遇到了一個流浪漢
+PRINTFORML 男人的手中握著剛剛掉下去的武器
+PRINTFORML 看来是被這男人揀到了、把事情経過向他説明後希望他能夠帰還
+SIF IS_FEMALE(対象)
+	PRINTFORML 男人用着黏糊糊的視線看向%ANAME(対象)%
+PRINTFORML 這已経是我的東西了、如果無論如何都想要我還你的話就給我3000金
+
+PRINTL
+CALL PRINT_ABILITY(対象, GETNUM(ABL, "武闘"))
+CALL ASK_MULTI_JUDGE("武力奪回", 1, "付錢", MONEY >= 3000, "放棄", 1, "用嘴奉仕", IS_FEMALE(対象), "用身体支付", IS_FEMALE(対象))
+
+SELECTCASE RESULT
+	CASE 0
+		PRINTFORML 原本就是自己的東西、沒必要付錢
+		PRINTFORML %ANAME(対象)%向男人襲撃過去！
+		IF LIMIT(ABL:対象:武闘, 30, 70) > RAND:100
+			PRINTFORML 成功了！
+			PRINTFORML 因為是徒手所以有些苦戦但還是成功從男人那裡奪回了武器
+			PRINTFORMW 確認一下無法動弾的男人樣子後離開了那裡
+			CALL PRINT_ADD_EXP(対象, "武闘経験値", RAND:5 + 3)
+		ELSEIF IS_MALE(対象)
+			PRINTFORML 糟了！
+			PRINTFORML 因為沒有武器所以沒能発揮出像往常一樣的力量…
+			PRINTFORMW 襲撃失敗被打傷后武器被男人直接帯走了
+			CALL ADD_COOLTIME(対象, 2)
+		ELSE
+			PRINTFORML 糟了！
+			PRINTFORML 因為沒有武器所以沒能発揮出像往常一樣的力量…
+			PRINTFORMW 襲撃失敗被打傷后武器被男人直接帯走了
+			PRINTFORMW 男人把無力的%ANAME(対象)%拖進了附近的樹叢……
+			PRINTFORML 
+			$RAPE_SCENE
+			PRINTFORML 從樹叢的深処傳來了男女的交合聲
+			PRINTFORMW 衣服被剝光的%ANAME(対象)%、正被流浪漢侵犯著
+			PRINTFORML 缺少女人的男人毫不留情地抽插著、%ANAME(対象)%已經精疲力竭了
+			PRINTFORMW 被從後面不停用力地剜動著%STR_BODY("膣：処女確認：時間経過：Ｖ挿入：中出し", 対象)%、%ANAME(対象)%快要喘不過氣了
+			PRINTFORMW 一邊揉搓著%STR_BODY("胸：性交", 対象)%、一邊拍打著%STR_BODY("尻：性交：後背位", 対象)%、被迫屈服于他
+			PRINTFORMW 當男人把髒汚泛黄的精液射入膣内的時候、%ANAME(対象)%大幅後弓著背高潮了……
+			CALL FUCK(対象, "欲望, 精愛, 性交, Ｖ, Ｍ, 接吻, 口淫, Ｖ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精", GET_SPERM_ID("流浪漢"), @"流浪漢的\@RAND:2 ? 肉棒 # 嘴唇\@", "流浪漢", "", "敗北後的強姦")
+			PRINTFORML 
+			PRINTFORMW %ANAME(対象)%被解放的時候夜已經深了
+			PRINTFORMW 被男人逼迫著約定下次再來、武器和衣服都被他搶走了……
+			CALL ADD_COOLTIME(対象, 3)
+		ENDIF
+	CASE 1
+		PRINTFORML 只能棄卒保車了……
+		PRINTFORML 默默地付了錢
+		CALL ICPRINT("支付了<3000>金", "L", カラー_注意)
+		MONEY -= 3000
+	CASE 2
+		PRINTFORML 雖然有些可惜、但不值得付那麼多錢
+		PRINTFORMW 於是放棄離開了
+	CASE 3
+		PRINTFORML 用嘴奉仕、能把它還給我麼……
+		PRINTFORML 這麼說完後、男人淫笑著把%ANAME(対象)%帯進了附近的樹叢
+		PRINTFORML
+		PRINTFORML %ANAME(対象)%一邊発出唾液的粘糊聲、一邊舔弄著男人的肉棒
+		PRINTFORMW 充滿恥垢的肉棒散発著悪臭、讓%ANAME(対象)%因為本能而有些饑渴難耐
+		PRINTFORMW %ANAME(対象)%的手指不知不覺中移向了下半身、最後開始了自慰
+		PRINTFORMW 男人因為%PRONOUN(対象)%的痴態更加興奮了、命令加快動作
+		PRINTFORMW 之後男人射出了精液、%ANAME(対象)%在沒有命令的情況下、自己把精液全部喝下去了…… 
+		CALL FUCK(対象, "欲望, 精愛, 奉仕, 性技, Ｍ, 口淫", "接吻喪失, 口内射精", 0, @"流浪漢的\@RAND:2 ? 肉棒 # 嘴唇\@", "", "", "売春")
+		PRINTFORML 
+		IF ABL:対象:性技 + ABL:対象:奉仕 < RAND:10
+			PRINTFORMW %ANAME(対象)%的奉仕沒有讓男人滿足
+			PRINTFORMW 他接下來、開始侵犯起%ANAME(対象)%……
+			GOTO RAPE_SCENE
+		ELSE
+			PRINTFORMW 男人把武器歸還了
+			PRINTFORMW 淫笑著說道、下次有機會的話再來啊……
+		ENDIF
+	CASE 4
+		PRINTFORML 用身体支付、能把它還給我麼……
+		PRINTFORML 這麼說完後、男人淫笑著把%ANAME(対象)%帯進了附近的樹叢
+		PRINTFORMW 
+		PRINTFORML 在安静的茂密草叢裡響起陣陣的男女激烈交合声
+		PRINTFORML 全裸的%ANAME(対象)%被男人仰面推倒、把肉棒挿入了深処
+		PRINTFORML 每次被発泄著性欲的男人毫不留情地用力剜動%STR_BODY("膣：処女確認：時間経過：感度", 対象)%的時候、%ANAME(対象)%都會痙攣呻吟
+		PRINTFORML 在男人用雙手抓住臉強行吻上來的時候、%ANAME(対象)%開始悶聲掙扎著
+		PRINTFORML 而男人在舌頭不停的交纏同時腰部更是激烈的運動着、%ANAME(対象)%感受着下半身的衝撃不禁身体顫抖繃緊了双脚
+		PRINTFORML 在被蹂躙般一樣激烈的性愛中、%ANAME(対象)%不管正被侵犯着的事実無意識的收縮着小穴纏緊了他的肉棒
+		PRINTFORMW 當髒汚泛黄的精液從男人肉棒射入膣内的時候、%ANAME(対象)%大幅後弓著背発出了淫叫
+		CALL FUCK(対象, "欲望, 精愛, 性交, Ｖ, Ｍ, 接吻, 口淫, Ｖ性交", "処女喪失, 膣内射精, 接吻喪失, 口内射精", GET_SPERM_ID("流浪漢"), @"流浪漢的\@RAND:2 ? 肉棒 # 嘴唇\@", "流浪漢", "", "売春")
+		PRINTFORML 
+		PRINTFORML 男人把武器扔向了躺在地上失神的%ANAME(対象)%身辺
+		PRINTFORMW 説道這就給我啦、拿着内袴就離開了
+ENDSELECT
+
+RETURN 1
