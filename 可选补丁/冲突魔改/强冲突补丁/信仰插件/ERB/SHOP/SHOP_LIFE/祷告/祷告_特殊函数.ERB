@@ -791,6 +791,177 @@ ELSE
 ENDIF
 RETURN 1
 ;-----------------------------------------------------------
+@SHOP_LIFE_USERSHOP68_SPACTION(对象,行动)
+;特殊交互行动,增加信仰和好感
+;交易:以金钱收购期货,溢价加NPC信仰,低价加主角信仰
+;切磋:随机拼武闘/防衛/知略,获胜加主角信仰,失败加NPC信仰(可以选择放水)
+;追求:随机:赠送礼物/约会逛街/郊外踏青
+#DIM 对象
+#DIM 行动
+#DIM 随机数
+SELECTCASE 行动
+	CASE 0 ;交易
+		IF MIRACLE_ITEM_NUM:1 > 0
+			;持有期货则可以出发购买
+			LOCAL = 2
+		ELSE
+			;未持有期货只会触发出售
+			LOCAL = 1
+		ENDIF 
+		随机数 = RAND:LOCAL
+		IF 随机数
+			;NPC购买
+			
+		ELSE
+			;NPC出售
+		ENDIF
+	CASE 1 ;切磋
+	CASE 2 ;追求
+ENDSELECT
+;-----------------------------------------------------------
+@SHOP_LIFE_USERSHOP68_BAPTISM(对象)
+;「洗礼之仪」
+;使对方立刻获得主角的信仰，并提升信仰值(与祭品相关)和属性
+;对儿童使用额外效果：允许更改角色天赋型（契合神可提升属性）
+#DIM 对象
+#DIM 祭品等级
+#DIM 随机数
+#DIM FIRST_LINE
+PRINTFORMW %ANAME(MASTER)%将%ANAME(对象)%带到了供奉%GOD_NAME:(CFLAG:MASTER:信仰神)%的祭坛
+PRINTL
+FIRST_LINE = LINECOUNT
+$BAPTISM_INPUT_S1
+PRINTFORMW 仪式已经随时可以开始，但如果献上祭品的话想必效果会更好，是否需要献上祭品呢？
+PRINTL  
+PRINTBUTTON " 0[不使用祭品]", 0
+PRINTL  
+PRINTL 
+PRINTBUTTON " 1[使用普通规格的祭品(花费1000资金)]", 1
+PRINTL  
+PRINTL 
+PRINTBUTTON " 2[使用上等规格的祭品(花费3000资金)]", 2
+PRINTL  
+PRINTL 
+PRINTBUTTON " 3[使用顶级规格的祭品(花费5000资金)]", 3
+PRINTL  
+PRINTL 
+INPUT
+SIF RESULT < 0 || RESULT > 3
+	GOTO BAPTISM_INPUT_S1
+IF RESULT > 0 && MONEY < RESULT * 2000 - 1000
+	CALL COLOR_PRINTW(@"当前资金不足！",カラー_注意)
+	GOTO BAPTISM_INPUT_S1
+ENDIF
+SIF RESULT > 0
+	MONEY -= RESULT * 2000 - 1000
+祭品等级 = RESULT
+CLEARLINE LINECOUNT - FIRST_LINE
+
+IF CFLAG:对象:行動不能状態 == 行動不能_子供
+	PRINTFORM %ANAME(对象)%在%ANAME(MASTER)%的教导下，恭恭敬敬地向神像供奉
+	SIF 祭品等级 > 0
+		 PRINT ，刹那间祭品化为了幽光消散
+	PRINTL
+	$BAPTISM_INPUT_S2
+	PRINTFORMW 在神像的帮助下，似乎可以改变%ANAME(对象)%的天赋(当前为{TALENT:对象:300})
+	PRINTL  
+	PRINTBUTTON " 0[保持不变]", 0
+	PRINTL  
+	PRINTL 
+	PRINTBUTTON " 1[变更为知将型]", 1
+	PRINTL  
+	PRINTL 
+	PRINTBUTTON " 2[变更为学士型]", 2
+	PRINTL  
+	PRINTL 
+	PRINTBUTTON " 3[变更为两道型]", 3
+	PRINTL  
+	PRINTL 
+	PRINTBUTTON " 4[变更为武官型]", 4
+	PRINTL  
+	PRINTL 
+	PRINTBUTTON " 5[变更为军师型]", 5
+	PRINTL  
+	PRINTL 
+	PRINTBUTTON " 6[变更为文官型]", 6
+	PRINTL  
+	PRINTL 
+	PRINTBUTTON " 7[变更为芸能型]", 7
+	PRINTL  
+	PRINTL 
+	PRINTBUTTON " 8[变更为料理型]", 8
+	PRINTL  
+	PRINTL 
+	INPUT
+	SIF RESULT < 0 || RESULT > 8
+		GOTO BAPTISM_INPUT_S2
+	IF RESULT
+		TALENT:对象:300 = RESULT
+		PRINTFORMW %ANAME(对象)%的天赋发生了改变！
+		PRINTL
+	ENDIF
+	PRINTFORMW %ANAME(对象)%决定信仰%GOD_NAME:(CFLAG:MASTER:信仰神)%了！
+ELSE
+	PRINTFORM %ANAME(对象)%来到了祭坛中央，恭敬地向神像行礼
+	SIF 祭品等级 > 0
+		 PRINT ，刹那间祭品化为了幽光消散
+	PRINTL
+	SELECTCASE CFLAG:MASTER:信仰神
+		CASE 1 ;暴虐
+			PRINTFORML 神像发出了深红的光芒，以及宛如金铁交击的轰鸣声
+			PRINTFORML %ANAME(对象)%恍惚间看见了一双威严而凛然的赤色眼眸
+			PRINTFORML 神力激发出了%ANAME(对象)%心中潜藏的澎湃战意与豪情
+			PRINTFORMW %ANAME(对象)%决定信仰%GOD_NAME:(CFLAG:MASTER:信仰神)%了！
+		CASE 2 ;诡术
+			PRINTFORML 神像发出了湛蓝的光芒，无形的力量将散落的物件拼合成了一个手舞足蹈的人形
+			PRINTFORML 那人形看着滑稽又怪诞，脸上两张落叶上下张合，声音却从%ANAME(对象)%心底浮现
+			PRINTFORML %ANAME(对象)%深感震撼，又为它渊博的知识和亲和的言语所折服
+			PRINTFORMW %ANAME(对象)%决定信仰%GOD_NAME:(CFLAG:MASTER:信仰神)%了！
+		CASE 3 ;腐朽
+			PRINTFORML 神像发出了幽深的紫光，一团虚影浮现，缓缓向%ANAME(对象)%走来
+			PRINTFORML 一开始还是蹒跚学步的孩童，转眼间变成了挺拔的青年，又逐渐衰颓
+			PRINTFORML 走到%ANAME(对象)%眼前时已是白发鹤颜的老者，祂发出低哑的笑声，为%ANAME(对象)%教授了腐朽与绝望的教义
+			PRINTFORMW %ANAME(对象)%决定信仰%GOD_NAME:(CFLAG:MASTER:信仰神)%了！
+		CASE 4 ;色欲
+			PRINTFORML 神像发出了粉色的柔光，%ANAME(对象)%眼前的场景突然变成了一间华丽的宫殿
+			PRINTFORML %ANAME(对象)%感受到了强烈的吸引力，轻轻推开了大门，映入眼中的便是酒池肉林般的荒淫场景
+			PRINTFORML 看不清面容的男女在殿堂内肆意交合，百般姿势，荒言淫语让人面红耳赤
+			PRINTFORML 但当%ANAME(对象)%冷静下来再一看时，宫内空无一人，不过是墙壁上的一副副春宫彩绘罢了。
+			PRINTFORML 伴随一声轻笑，%ANAME(对象)%蓦然回到了祭坛之上，愣住许久才回神
+			PRINTFORMW %ANAME(对象)%决定信仰%GOD_NAME:(CFLAG:MASTER:信仰神)%了！
+	ENDSELECT
+	PRINTL
+ENDIF
+CFLAG:对象:信仰神 = CFLAG:MASTER:信仰神
+IF ABL:对象:信仰 < 祭品等级 * 10
+	ABL:对象:信仰 = 祭品等级 * 10
+	CALL COLOR_PRINTW(@"%ANAME(对象)%的信仰值上升到了{ABL:对象:信仰}！",カラー_注意)
+ENDIF
+IF 祭品等级 > 0
+	SELECTCASE CFLAG:对象:信仰神
+			CASE 1 ;暴虐
+				PRINTFORML %ANAME(对象)%获得了%GOD_NAME:(CFLAG:MASTER:信仰神)%的祝福，武闘和防衛的经验值提升了！
+				CALL PRINT_ADD_EXP(对象, "武闘経験値",10*祭品等级, 1)
+				CALL PRINT_ADD_EXP(对象, "防衛経験値",10*祭品等级, 1)
+				CALL TRAIN_AUTO_ABLUP(对象)
+			CASE 2
+				PRINTFORML %ANAME(对象)%获得了%GOD_NAME:(CFLAG:MASTER:信仰神)%的祝福，知略和政治的经验提升了！
+				CALL PRINT_ADD_EXP(对象, "知略経験値",10*祭品等级, 1)
+				CALL PRINT_ADD_EXP(对象, "政治経験値",10*祭品等级, 1)
+				CALL TRAIN_AUTO_ABLUP(对象)
+			CASE 3
+				PRINTFORML %ANAME(对象)%获得了%GOD_NAME:(CFLAG:MASTER:信仰神)%的祝福，武闘和知略的经验提升了！
+				CALL PRINT_ADD_EXP(对象, "武闘経験値",10*祭品等级, 1)
+				CALL PRINT_ADD_EXP(对象, "知略経験値",10*祭品等级, 1)
+				CALL TRAIN_AUTO_ABLUP(对象)
+			CASE 4
+				PRINTFORML %ANAME(对象)%获得了%GOD_NAME:(CFLAG:MASTER:信仰神)%的祝福，歌唱和料理的经验提升了！
+				CALL PRINT_ADD_EXP(对象, "歌唱経験値",10*祭品等级, 1)
+				CALL PRINT_ADD_EXP(对象, "料理経験値",10*祭品等级, 1)
+				CALL TRAIN_AUTO_ABLUP(对象)
+	ENDSELECT
+	PRINTW
+ENDIF
 ;--------------每阶段结束时的信仰相关事件-----------------------
 @MIRACLE_TRUNEND_SP
 ;TURNEND.ERB

@@ -837,9 +837,10 @@ FOR LOCAL,1,(MIRACLE_LUST_TRAIN_TARGET:0) + 1,1 ;判断是否玩家参与
 	SIF MIRACLE_LUST_TRAIN_TARGET:LOCAL == MASTER
 		玩家参与 = 1
 NEXT
-
+IF 发起者 >= 0
 SIF CFLAG:发起者:信仰神 == 4 && ((发起者==MASTER) + 玩家参与 + FAITH_SHOW_CHANGE)
 	CALL COLOR_PRINTL(@"%ANAME(发起者)%在%事件名%事件中践行了%GOD_NAME:(CFLAG:发起者:信仰神)%的教义", カラー_注意)
+ENDIF
 
 IF 玩家参与 && CFLAG:MASTER:信仰神 == 4
 	;调教类事件 玩家根据调教后关系进展发放经验
@@ -956,10 +957,8 @@ RETURN 1
 #DIM 玩家参与 ;0=玩家参与,1=玩家参与(不一定是主导者)
 #DIM 随机数
 玩家参与 = (发起者 == MASTER) + (对象 == MASTER)
-
 SIF CFLAG:发起者:信仰神 == 4 && (玩家参与 + FAITH_SHOW_CHANGE)
 	CALL COLOR_PRINTL(@"%ANAME(发起者)%在%事件名%事件中践行了%GOD_NAME:(CFLAG:发起者:信仰神)%的教义", カラー_注意)
-	
 ;无调教类事件 直接发放基础奖励
 IF 玩家参与
 	IF CFLAG:MASTER:信仰神 == 4
