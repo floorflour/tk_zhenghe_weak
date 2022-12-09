@@ -18,7 +18,7 @@ SIF !IS_COUNTRY(CFLAG:MASTER:所属)
 ;你的名声必须要好(私下版)
 SIF CHECK_SKILL_DUPLICATE(MASTER, スキル_ジャンル_PERSONAL, 0, 43) || CHECK_SKILL_DUPLICATE(MASTER, スキル_ジャンル_PERSONAL, 0, 44)
     RETURN 0
-RETURN DVAR:恋人酱的后宫 && RAND:100 < 10
+RETURN DVAR:恋人酱的后宫 && RAND:1000 < (FLAG:陥落人数 / 10 * 100)
 
 ;---------------------
 ;特定の条件を満たすキャラをランダムに選択する場合に利用
@@ -99,7 +99,7 @@ FOR LOCAL, 0, 数量
 		ENDDATA
 	ENDIF
 	CALL FUCK_MAKELOVE(随机人物, GET_ID(MASTER), @"%ANAME(MASTER)%的嘴唇", ANAME(MASTER))
-	CALL FUCK(MASTER, "Ｃ, 射精, Ｖ挿入", "童貞喪失", 0, "", "", @"%ANAME(随机人物)%的膣穴")
+	CALL FUCK(MASTER, "Ｃ, 射精, 接吻, Ｖ挿入, Ａ挿入", "接吻喪失, 童貞喪失", 0, @"%ANAME(随机人物)%的嘴唇", "", @"%ANAME(随机人物)%的膣穴")
 	IF !TALENT:随机人物:合意
 		CALL COLOR_PRINTW(@"获得了%ANAME(随机人物)%的合意♥", カラー_ピンク)
 		TALENT:随机人物:合意 = 1

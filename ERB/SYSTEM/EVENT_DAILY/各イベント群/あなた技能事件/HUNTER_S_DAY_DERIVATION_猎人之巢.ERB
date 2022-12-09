@@ -53,7 +53,7 @@ SIF !HAS_PENIS(MASTER)
 ;技能只能习得一系，除非全部遗忘
 SIF CHECK_SKILL_DUPLICATE(MASTER, スキル_ジャンル_PERSONAL, 0, 41) || CHECK_SKILL_DUPLICATE(MASTER, スキル_ジャンル_PERSONAL, 0, 42)
     RETURN 0
-RETURN RAND:100 < ABL:MASTER:欲望 * 5
+RETURN RAND:1000 < (ABL:MASTER:欲望 + ABL:MASTER:性技) * 50
 
 ;---------------------
 ;特定の条件を満たすキャラをランダムに選択する場合に利用
@@ -143,8 +143,8 @@ SELECTCASE RAND:5
         PRINTFORMW %ANAME(对象)%强忍着快感，尽量用平静的语气向%ANAME(MASTER)%传递着情报
         PRINTFORMW %ANAME(MASTER)%对%ANAME(对象)%的表现非常满意，作为奖励便让她在被中出的一瞬间剧烈高潮……
 ENDSELECT
-CALL FUCK(对象, "Ｃ, Ｖ, Ｂ, 欲望, 精愛, 奉仕, 奉仕, 性交, 接吻, 口淫, Ｖ性交", "膣内射精, 接吻喪失, 処女喪失, 口内射精",　GET_ID(MASTER), @"%ANAME(MASTER)%的阴茎", ANAME(MASTER), "", "調教")
-CALL FUCK(MASTER, "Ｃ, 射精, Ｖ挿入", "童貞喪失", 0, "", "", @"%ANAME(对象)%的小穴", "調教")
+CALL FUCK(对象, "Ｃ, Ｖ, Ｂ, Ｍ, 欲望, 精愛, 奉仕, 奉仕, 性交, 接吻, 口淫, Ｖ性交, Ａ性交", "接吻喪失, 処女喪失, Ａ処女喪失, 膣内射精, 腸内射精, 口内射精",　GET_ID(MASTER), @"%ANAME(MASTER)%的阴茎", ANAME(MASTER), "", "調教")
+CALL FUCK(MASTER, "Ｃ, Ｍ, 射精, 接吻, Ｖ挿入, Ａ挿入", "接吻喪失, 童貞喪失", 0, @"%ANAME(对象)%的嘴唇", "", @"%ANAME(对象)%的小穴", "調教")
 CFLAG:对象:従属度 += 200
 CFLAG:对象:依存度 += 40
 
